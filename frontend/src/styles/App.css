@@ -17,3 +17,41 @@ body {
   .BooksContainer h1 {
     margin: 25px
     }
+
+.FieldsContainer {
+  padding: 15px;
+  background: #fff;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 3px;
+  max-width: 35%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+.FieldsContainer h1 {
+  text-align: center;
+  margin-top: -2px;
+}
+
+.FieldsContainerButtons {
+  display: flex;
+  max-width: 75%;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.FieldElements {
+  margin: 0 auto;
+  margin-bottom: 15px;
+  max-width: 80%;
+}
+
+.Field {
+  margin-bottom: 10px;
+}
+
+
+

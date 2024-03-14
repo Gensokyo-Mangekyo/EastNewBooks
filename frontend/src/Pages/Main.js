@@ -3,6 +3,7 @@ import Nav from "../components/UI/Nav/Nav";
 import AdminNav from "../components/UI/Nav/AdminNav";
 import BooksContainer from "../components/BooksContrainer";
 import c_sharp from "../images/c_4_0.jpg"
+import FieldsContainer from "../components/FieldsContainer";
 
 
 export default function Main() {

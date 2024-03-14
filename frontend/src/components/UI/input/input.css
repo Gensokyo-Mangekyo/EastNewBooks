@@ -1,0 +1,11 @@
+.input-text {
+    background: #f7f8f9;
+    border: 1px solid #eaeaea;
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
+    line-height: normal;
+    color: #626060;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

@@ -1,0 +1,11 @@
+.label-text {
+    color: #1c1d1e;
+    font-family: "Roboto-Regular", sans-serif;
+    text-rendering: optimizeLegibility;
+    margin: 0 0 5px;
+    display: block;
+    line-height: 2;
+    font-weight: 700;
+	font-size: 16px;
+	font-style: inherit;
+}
