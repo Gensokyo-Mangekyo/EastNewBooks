@@ -1,0 +1,65 @@
+.card {
+    width: 200px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 5px 10px; 
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .card img {
+    width: 100%;
+	height: 75%;
+	cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .NameCard {
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+	font-weight: 600;
+	color: #626060;
+    white-space: nowrap;
+    overflow: hidden;
+	cursor: pointer;
+  text-wrap: wrap;
+    text-overflow: ellipsis;
+	font-family: GTEestiPro, Arial, sans-serif;
+  }
+
+  .Price {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    line-height: 24px;
+	color: #ff0052;
+	white-space: nowrap;
+	cursor: pointer;
+	font-family: GTEestiPro, Arial, sans-serif;
+  }
+
+  .CardsFlex {
+	display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+	gap: 15px;
+  }
+  
+  .ReleaseDate {
+	font-size: 20px;
+	letter-spacing: .4px;
+	white-space: nowrap;
+	cursor: pointer;
+	font-family: GTEestiPro, Arial, sans-serif;
+	color: #2553ea;
+	font-weight: 600;
+	text-align: right;
+  }
+
+  .ShortInfo {
+    margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+}

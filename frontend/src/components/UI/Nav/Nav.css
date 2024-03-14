@@ -1,0 +1,54 @@
+nav ul {
+    display: flex;
+	justify-content: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	border-radius: 4px;
+  }
+
+.AdminUl {
+    box-shadow: 0 0px 0px -0px rgba(0, 0, 0, 0.1), 0 0px 0px -0px rgba(0, 0, 0, 0.06)
+}
+  
+.AdminHeader {
+    text-align: center;
+}
+
+  nav a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    padding: 1rem;
+	cursor: pointer;
+	font-size: 20px;
+	Color: black;
+	box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  nav p {
+    color: black;
+    display: inline-block;
+    padding: 1rem;
+	cursor: pointer;
+	font-size: 20px;
+	Color: black;
+	box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+
+  nav a:hover {
+    color: green;
+  }
+
+  nav p:hover {
+    color: green;
+  }
+
+  nav {
+    margin: 0 auto;
+	margin-bottom: 15px;
+	display: flex;
+	justify-content: center;
+  }
