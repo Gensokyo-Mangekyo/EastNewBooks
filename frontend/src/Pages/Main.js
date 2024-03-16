@@ -40,6 +40,25 @@ export default function Main() {
         Name: "Удалить книгу"
        },
      ]} ></AdminNav>
+     <FieldsContainer Name="Добавление книги" Fields = {[
+            {Name: "Наименование", Attributes: {
+              maxLength: 100
+            },
+           },
+          {Name: "Цена", Attributes: {
+            maxLength: 5
+          },
+          },
+          {Name: "Страницы", Attributes: {
+            maxLength: 4
+          },
+          },
+          {Name: "Год", Attributes: {
+            maxLength: 4
+          },
+          },
+          {Name: "Изображение", Type: "DropImage"}
+     ]} TextButton = {"Добавить новую книгу"}  />
      <Search Click={(e)=> {
         e.preventDefault()
      }} />
