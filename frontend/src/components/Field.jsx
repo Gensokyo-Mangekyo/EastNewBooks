@@ -4,18 +4,15 @@ import DropImage from "./UI/input/DropImage";
 import { useState } from "react";
 
 export default function Field(props) {
-    let Input =  <InputText {...props.InputAttributes} />
+    let Input =  <InputText {...props.InputAttributes} Change = {props.Change} />
     const [Image,SetImage] = useState("")
-
-
 
     function preventDefaults (e) {
         e.preventDefault();
         e.stopPropagation();
       }
     
-  
-    if (props.Type === "DropImage") Input = <DropImage Image= {Image}  onDragEnter={preventDefaults} onDragOver={preventDefaults} onDragLeave={preventDefaults} onDrop={(e)=> {
+    if (props.Type === "DropImage") Input = <DropImage Change = {props.Change} Image= {Image}  onDragEnter={preventDefaults} onDragOver={preventDefaults} onDragLeave={preventDefaults} onDrop={(e)=> {
         preventDefaults(e)
         let dt = e.dataTransfer;
         let files = dt.files;
