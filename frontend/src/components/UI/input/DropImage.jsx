@@ -11,7 +11,7 @@ export default function DropImage({Change,Image, ...props}) {
     
     if (Image !== "" && Changed === false ) {
         SetChanged(true)
-        Change(true)
+        Change(Image)
     } 
 
     return <div  className="DropImage" {...props} >

@@ -2,20 +2,26 @@ import Search from "../components/UI/Search/Search";
 import Nav from "../components/UI/Nav/Nav";
 import AdminNav from "../components/UI/Nav/AdminNav";
 import BooksContainer from "../components/BooksContrainer";
-import c_sharp from "../images/c_4_0.jpg"
 import FieldsContainer from "../components/FieldsContainer";
+import BooksService from "../API/BooksService";
+import { useState,useEffect } from "react";
 
 
 export default function Main() {
+
+  const [AdminPanel,SetAdminPanel] = useState(null)
+  const [Books,SetBooks] = useState([])
+
+  useEffect(()=> {
+    const Books = BooksService.GetBooks();
+    SetBooks(Books.data)
+  },[])
+
   return (
     <div>
            <Nav Navigate = {[{
       Link: "/",
       Name: "Главная"
-     },
-     {
-      Link: "/",
-      Name: "О нас"
      },
      {
       Link: "/",
@@ -27,20 +33,18 @@ export default function Main() {
      },
      {
       Link: "/",
+      Name: "Контакты"
+     },
+     {
+      Link: "/",
       Name: "Личный кабинет"
      },
      ]} />
-       <AdminNav Navigate = {[
+    
+    {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
-        Click: () => {},
-        Name: "Добавить книгу"
-       },
-       {
-        Click: () => {},
-        Name: "Удалить книгу"
-       },
-     ]} ></AdminNav>
-     <FieldsContainer Name="Добавление книги" Fields = {[
+        Click: (e) => { 
+          SetAdminPanel( <FieldsContainer Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -58,20 +62,24 @@ export default function Main() {
           },
           },
           {Name: "Изображение", Type: "DropImage"}
-     ]} TextButton = {"Добавить новую книгу"}  />
+     ]} TextButton = "Добавить новую книгу"  />)
+        },
+        Name: "Добавить книгу"
+       },
+       {
+        Click: (e) => { SetAdminPanel(<FieldsContainer Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
+          maxLength: 100
+        },
+       },]} /> ) 
+      },
+        Name: "Удалить книгу"
+       },
+     ]} ></AdminNav>}
      <Search Click={(e)=> {
         e.preventDefault()
      }} />
-    <BooksContainer Name ="Главная" Books = {[
-      {
-        id: 1,
-        url: c_sharp,
-        name: "C# 4.0: полное руководство",
-        pages: 1056,
-        price: 820,
-        year: 2011,
-      }
-    ]} />
+    
+    <BooksContainer Name ="Главная" Books = {Books} />
     </div>
   );
 }

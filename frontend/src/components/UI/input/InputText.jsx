@@ -6,5 +6,5 @@ export default function InputText({Change, ...props}) {
         Change(false)
     },[])
 
-    return <input onChange={(e) => Change(e.target.value !== "")}  type="text" {...props} class="input-text" />
+    return <input onChange={(e) => Change(e.target.value)}  type="text" {...props} className="input-text" />
 }

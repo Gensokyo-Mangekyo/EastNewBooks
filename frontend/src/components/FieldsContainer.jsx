@@ -5,7 +5,12 @@ import { useState } from "react";
 export default function FieldsContainer(props) {
 
   const [childStates, setChildStates] = useState([]); //Массив состояний валидаций на пустые данные
-  const [error, SetError] = useState(false); //Массив состояний валидаций на пустые данные
+  const [error, SetError] = useState(false); 
+  const [Image,SetImage] = useState()
+
+  const ImageCallback = function(NewImage) {
+      SetImage(NewImage)
+  }
   
   const handleChildStateUpdate = (index, state) => {  //Callback функций для установки значения валидации
       const updatedChildStates = [...childStates];
@@ -17,7 +22,7 @@ export default function FieldsContainer(props) {
         {error ? <h2>Все данные должны быть заполнены!</h2> : ""}
             <div className="FieldElements">
                {props.Fields.map((x,index) => {
-                 return  <Field  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
+                 return  <Field SetImage= {ImageCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
                }) }
                  
                  </div>
