@@ -6,10 +6,11 @@ export default function FieldsContainer(props) {
 
   const [childStates, setChildStates] = useState([]); //Массив состояний валидаций на пустые данные
   const [error, SetError] = useState(false); 
-  const [Image,SetImage] = useState()
+  const [ImageBytes,SetImageBytes] = useState()
+  const FieldsValueArray = []
 
-  const ImageCallback = function(NewImage) {
-      SetImage(NewImage)
+  const ImageBytesCallback = function(NewImage) {
+    SetImageBytes(NewImage)
   }
   
   const handleChildStateUpdate = (index, state) => {  //Callback функций для установки значения валидации
@@ -22,19 +23,23 @@ export default function FieldsContainer(props) {
         {error ? <h2>Все данные должны быть заполнены!</h2> : ""}
             <div className="FieldElements">
                {props.Fields.map((x,index) => {
-                 return  <Field SetImage= {ImageCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
+                 return  <Field SetImageBytes = {ImageBytesCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
                }) }
                  
                  </div>
                  <div className="FieldsContainerButtons">
-                
                  <Button  onClick={function() {
                     for (const state of childStates) {
                       if (!state) {
                           SetError(true)
                           return;
                       }
+                      if (typeof(state) === "string" || typeof(state) === "number")
+                      FieldsValueArray.push(state)
                   }
+                  if (ImageBytes)
+                  FieldsValueArray.push(ImageBytes)
+                  props.SetValueFields(FieldsValueArray)
                   SetError(false)
                  } }>{props.TextButton}</Button>
                

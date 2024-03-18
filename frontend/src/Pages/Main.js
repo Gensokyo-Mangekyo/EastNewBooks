@@ -12,10 +12,27 @@ export default function Main() {
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState([])
 
-  useEffect(()=> {
-    const Books = BooksService.GetBooks();
-    SetBooks(Books.data)
-  },[])
+
+  const SetValueFieldsCallback = async (value) => { SetAdminPanel(null)
+    const JsonData = {
+      Name: value[0],
+      Price: value[1],
+      Pages: value[2],
+      Year: value[3],
+      Url: value[4],
+    }
+    await BooksService.AddBook(JsonData)
+  }
+
+  async function GetBooks() {
+    const Books = await BooksService.GetBooks();
+    if (Books)
+    SetBooks(Books)
+  }
+
+  useEffect( ()=> {
+   GetBooks()
+    },[])
 
   return (
     <div>
@@ -44,7 +61,7 @@ export default function Main() {
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -79,7 +96,7 @@ export default function Main() {
         e.preventDefault()
      }} />
     
-    <BooksContainer Name ="Главная" Books = {Books} />
+    <BooksContainer Default="Возникли технические неполадки с сервисом!" Name ="Главная" Books = {Books} />
     </div>
   );
 }

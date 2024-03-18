@@ -18,6 +18,12 @@ body {
     margin: 25px
     }
 
+.FlexContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
 .FieldsContainer {
   padding: 15px;
   background: #fff;

@@ -23,7 +23,13 @@ export default function Field(props) {
                reader.readAsDataURL(file);
                reader.onload = function() {
                 SetImage(reader.result);
-                 
+                 }
+                 let readerBytes = new FileReader();
+                 readerBytes.readAsArrayBuffer(file);
+                 readerBytes.onload = function() {
+                    const uint8 = new Uint8Array(readerBytes.result);
+                    props.SetImageBytes(uint8.join(' '))
+                    
                  }
            }
         }
