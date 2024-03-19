@@ -24,4 +24,14 @@ export default class BooksService {
     }
   }
 
+  static async SearchBooks(query) {
+    try {
+      const response = await axios.get(BooksService.host + "/SearchBooks?query=" + query)
+      console.log(response.data)
+      return response.data
+      } catch(e) {
+          console.log(e)
+      }
+  }
+
 }

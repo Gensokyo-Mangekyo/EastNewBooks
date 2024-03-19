@@ -5,12 +5,15 @@ import BooksContainer from "../components/BooksContrainer";
 import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
 import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Main() {
 
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState([])
+  const [Query,SetQuery] = useState("")
+  const navigate = useNavigate();
 
 
   const SetValueFieldsCallback = async (value) => { SetAdminPanel(null)
@@ -37,25 +40,11 @@ export default function Main() {
   return (
     <div>
            <Nav Navigate = {[{
-      Link: "/",
-      Name: "Главная"
-     },
-     {
-      Link: "/",
-      Name: "Корзина"
-     },
-     {
-      Link: "/",
-      Name: "Оформить заказ"
-     },
-     {
-      Link: "/",
-      Name: "Контакты"
-     },
-     {
-      Link: "/",
-      Name: "Личный кабинет"
-     },
+      Link: "/",Name: "Главная" },
+     {Link: "/",Name: "Корзина" }, 
+     {Link: "/",Name: "Оформить заказ"},
+     {Link: "/",Name: "Контакты"},
+     {Link: "/",Name: "Личный кабинет"},
      ]} />
     
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
@@ -92,8 +81,11 @@ export default function Main() {
         Name: "Удалить книгу"
        },
      ]} ></AdminNav>}
-     <Search Click={(e)=> {
-        e.preventDefault()
+     <Search Change = {(e)=> {
+      SetQuery(e.target.value)
+     }} Click={(e)=> {
+      const searchUrl = `/SearchBooks/` + Query;
+      navigate(searchUrl)
      }} />
     
     <BooksContainer Default="Возникли технические неполадки с сервисом!" Name ="Главная" Books = {Books} />
