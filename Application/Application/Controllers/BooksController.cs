@@ -14,11 +14,19 @@ namespace Application.Controllers
         [Route("/AddBook")]
         public IActionResult AddBook([FromBody] Book BodyBook, [FromServices] ApplicationContext applicationContext, [FromServices] ImageService imageService)
         {
-            Book CloneBook = BodyBook.Clone() as Book;
-            CloneBook.Url = imageService.GetUrImage("ImagesBooks", CloneBook.Name, CloneBook.Url);
-            applicationContext.Books.Add(CloneBook);
-            applicationContext.SaveChanges();
-            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Last());
+
+            if (BodyBook != null)
+            {
+                Book CloneBook = BodyBook.Clone() as Book;
+                CloneBook.Url = imageService.GetUrImage("ImagesBooks", CloneBook.Name, CloneBook.Url);
+                applicationContext.Books.Add(CloneBook);
+                applicationContext.SaveChanges();
+                return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Last());
+            }
+            else
+            {
+                return new JsonResult(new { Error = "Некоректно введённые данные в поле ввода!" });
+            }
         }
 
         [HttpGet]

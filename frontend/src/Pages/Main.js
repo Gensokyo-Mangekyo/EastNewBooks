@@ -13,10 +13,11 @@ export default function Main() {
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState([])
   const [Query,SetQuery] = useState("")
+  const [ErrorPost,SetErrorPost] = useState("")
   const navigate = useNavigate();
 
 
-  const SetValueFieldsCallback = async (value) => { SetAdminPanel(null)
+  const SetValueFieldsCallback = async (value) => { 
     const JsonData = {
       Name: value[0],
       Price: value[1],
@@ -24,7 +25,16 @@ export default function Main() {
       Year: value[3],
       Url: value[4],
     }
-    await BooksService.AddBook(JsonData)
+   const Result = await BooksService.AddBook(JsonData)
+   if (Result.error) {
+    SetErrorPost(Result.error)
+    
+   }
+   else {
+    const NewBooks = [...Books].push(Result)
+    SetBooks(NewBooks)
+    SetAdminPanel(null)
+   }
   }
 
   async function GetBooks() {
@@ -50,7 +60,7 @@ export default function Main() {
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer Error={ErrorPost} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -73,7 +83,7 @@ export default function Main() {
         Name: "Добавить книгу"
        },
        {
-        Click: (e) => { SetAdminPanel(<FieldsContainer Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
+        Click: (e) => { SetAdminPanel(<FieldsContainer Error={ErrorPost} Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
           maxLength: 100
         },
        },]} /> ) 

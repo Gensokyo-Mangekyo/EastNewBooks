@@ -5,14 +5,14 @@ import { useState } from "react";
 export default function FieldsContainer(props) {
 
   const [childStates, setChildStates] = useState([]); //Массив состояний валидаций на пустые данные
-  const [error, SetError] = useState(false); 
   const [ImageBytes,SetImageBytes] = useState()
+  const [Error,SetError] = useState("")
   const FieldsValueArray = []
-
+  
   const ImageBytesCallback = function(NewImage) {
     SetImageBytes(NewImage)
   }
-  
+
   const handleChildStateUpdate = (index, state) => {  //Callback функций для установки значения валидации
       const updatedChildStates = [...childStates];
       updatedChildStates[index] = state;
@@ -20,7 +20,7 @@ export default function FieldsContainer(props) {
   };
     return <div className="FieldsContainer">
         <h1>{props.Name}</h1>
-        {error ? <h2>Все данные должны быть заполнены!</h2> : ""}
+        {Error !== "" ? <h2>{props.Error}</h2> : ""}
             <div className="FieldElements">
                {props.Fields.map((x,index) => {
                  return  <Field SetImageBytes = {ImageBytesCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
@@ -31,7 +31,9 @@ export default function FieldsContainer(props) {
                  <Button  onClick={function() {
                     for (const state of childStates) {
                       if (!state) {
-                          SetError(true)
+                        const Str = "Все данные должны быть заполнены!"
+                          SetError(Str)
+                          console.log(Error)
                           return;
                       }
                       if (typeof(state) === "string" || typeof(state) === "number")
@@ -39,8 +41,8 @@ export default function FieldsContainer(props) {
                   }
                   if (ImageBytes)
                   FieldsValueArray.push(ImageBytes)
+                  SetError("")
                   props.SetValueFields(FieldsValueArray)
-                  SetError(false)
                  } }>{props.TextButton}</Button>
                
              
