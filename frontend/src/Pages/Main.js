@@ -28,7 +28,6 @@ export default function Main() {
    const Result = await BooksService.AddBook(JsonData)
    if (Result.error) {
     SetErrorPost(Result.error)
-    
    }
    else {
     const NewBooks = [...Books].push(Result)
@@ -50,11 +49,25 @@ export default function Main() {
   return (
     <div>
            <Nav Navigate = {[{
-      Link: "/",Name: "Главная" },
-     {Link: "/",Name: "Корзина" }, 
-     {Link: "/",Name: "Оформить заказ"},
-     {Link: "/",Name: "Контакты"},
-     {Link: "/",Name: "Личный кабинет"},
+      Link: "/",
+      Name: "Главная"
+     },
+     {
+      Link: "/",
+      Name: "Корзина"
+     },
+     {
+      Link: "/",
+      Name: "Оформить заказ"
+     },
+     {
+      Link: "/",
+      Name: "Контакты"
+     },
+     {
+      Link: "/",
+      Name: "Личный кабинет"
+     },
      ]} />
     
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
@@ -91,11 +104,9 @@ export default function Main() {
         Name: "Удалить книгу"
        },
      ]} ></AdminNav>}
-     <Search Change = {(e)=> {
-      SetQuery(e.target.value)
-     }} Click={(e)=> {
-      const searchUrl = `/SearchBooks/` + Query;
-      navigate(searchUrl)
+     <Search Click={(e)=> {
+          const searchUrl = `/SearchBooks/` + Query;
+          navigate(searchUrl)
      }} />
     
     <BooksContainer Default="Возникли технические неполадки с сервисом!" Name ="Главная" Books = {Books} />
