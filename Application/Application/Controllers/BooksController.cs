@@ -12,7 +12,7 @@ namespace Application.Controllers
 
         [HttpPost]
         [Route("/AddBook")]
-        public IActionResult AddBook([FromBody] Book BodyBook ,[FromServices] ApplicationContext applicationContext, [FromServices] ImageService imageService)
+        public JsonResult AddBook([FromBody] Book BodyBook ,[FromServices] ApplicationContext applicationContext, [FromServices] ImageService imageService)
         {
 
             if (BodyBook != null)

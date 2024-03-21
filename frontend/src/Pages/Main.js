@@ -7,12 +7,11 @@ import BooksService from "../API/BooksService";
 import { useState,useEffect,createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const MyContext = createContext();
 
 export default function Main() {
 
   const [AdminPanel,SetAdminPanel] = useState(null)
-  const [Books,SetBooks] = useState([])
+  const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
   const [ErrorPost,SetErrorPost] = useState("")
   const navigate = useNavigate();
@@ -28,13 +27,14 @@ export default function Main() {
    const Result = await BooksService.AddBook(JsonData)
    if (Result.error) {
     SetErrorPost(Result.error)
-
+    return true
    }
    else {
     const NewBooks = [...Books].push(Result)
     SetBooks(NewBooks)
     SetAdminPanel(null)
    }
+   return false
   }
 
   async function GetBooks() {
@@ -107,12 +107,14 @@ export default function Main() {
      ]} ></AdminNav>}
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
+      //Query = e.target.value
+      console.log(Query)
      }}  Click={(e)=> {
           const searchUrl = `/SearchBooks/` + Query;
           navigate(searchUrl)
      }} />
     
-    <BooksContainer Default="Возникли технические неполадки с сервисом!" Name ="Главная" Books = {Books} />
+    <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} />
     </div>
   );
 }

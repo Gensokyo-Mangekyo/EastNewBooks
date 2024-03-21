@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Search from "../components/UI/Search/Search";
 
 
+
 export default function SearchQuery() {
     const  { search } = useParams() 
     const [Books,SetBooks] = useState([])
