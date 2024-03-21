@@ -20,7 +20,7 @@ export default function FieldsContainer(props) {
   };
     return <div className="FieldsContainer">
         <h1>{props.Name}</h1>
-        {error ? <h2>Все данные должны быть заполнены!</h2> : ""}
+        {error  ? <h2>Все данные должны быть заполнены!</h2> : ""}
             <div className="FieldElements">
                {props.Fields.map((x,index) => {
                  return  <Field SetImageBytes = {ImageBytesCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>

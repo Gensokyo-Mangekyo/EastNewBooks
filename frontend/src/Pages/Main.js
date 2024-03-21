@@ -4,9 +4,10 @@ import AdminNav from "../components/UI/Nav/AdminNav";
 import BooksContainer from "../components/BooksContrainer";
 import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
-import { useState,useEffect } from "react";
+import { useState,useEffect,createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+export const MyContext = createContext();
 
 export default function Main() {
 
@@ -15,7 +16,6 @@ export default function Main() {
   const [Query,SetQuery] = useState("")
   const [ErrorPost,SetErrorPost] = useState("")
   const navigate = useNavigate();
-
 
   const SetValueFieldsCallback = async (value) => { 
     const JsonData = {
@@ -28,6 +28,7 @@ export default function Main() {
    const Result = await BooksService.AddBook(JsonData)
    if (Result.error) {
     SetErrorPost(Result.error)
+
    }
    else {
     const NewBooks = [...Books].push(Result)
@@ -73,7 +74,7 @@ export default function Main() {
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer Error={ErrorPost} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer value={{ ErrorPost,SetErrorPost }}  SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -96,7 +97,7 @@ export default function Main() {
         Name: "Добавить книгу"
        },
        {
-        Click: (e) => { SetAdminPanel(<FieldsContainer Error={ErrorPost} Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
+        Click: (e) => { SetAdminPanel(<FieldsContainer  Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
           maxLength: 100
         },
        },]} /> ) 
@@ -104,7 +105,9 @@ export default function Main() {
         Name: "Удалить книгу"
        },
      ]} ></AdminNav>}
-     <Search Click={(e)=> {
+     <Search Change = {(e)=> {
+      SetQuery(e.target.value)
+     }}  Click={(e)=> {
           const searchUrl = `/SearchBooks/` + Query;
           navigate(searchUrl)
      }} />

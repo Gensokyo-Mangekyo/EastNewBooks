@@ -35,5 +35,22 @@ namespace Application.Controllers
         {
             return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).ToList());
         }
+
+
+        [HttpGet]
+        [Route("/SearchBooks")]
+        public IActionResult SearchBooks(string query, [FromServices] ApplicationContext applicationContext)
+        {
+            List<Book> searchBooks = new List<Book>();
+
+            Array.ForEach(applicationContext.Books.OrderBy(item => item.Id).ToArray(), (x) =>
+            {
+                if (x.Name.ToLower().Contains(query.ToLower()))
+                    searchBooks.Add(x);
+            });
+
+            return new JsonResult(searchBooks);
+        }
+
     }
 }
