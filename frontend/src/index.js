@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import "../src/styles/App.css"
 import { BrowserRouter, Route,Routes } from 'react-router-dom';
 import SearchQuery from './Pages/SearchQuery';
+import ShowInfoBook from './Pages/ShowInfoBook';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,6 +14,7 @@ root.render(
     <Routes>
     <Route path='/' element={<Main></Main>}></Route>
     <Route path='/SearchBooks/:search' element={<SearchQuery></SearchQuery>}></Route>
+    <Route path='/Book' element={<ShowInfoBook/>}></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

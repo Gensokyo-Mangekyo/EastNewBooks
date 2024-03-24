@@ -107,8 +107,6 @@ export default function Main() {
      ]} ></AdminNav>}
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
-      //Query = e.target.value
-      console.log(Query)
      }}  Click={(e)=> {
           const searchUrl = `/SearchBooks/` + Query;
           navigate(searchUrl)
