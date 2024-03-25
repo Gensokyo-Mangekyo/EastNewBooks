@@ -37,4 +37,13 @@ export default class BooksService {
       }
   }
 
+  static async GetBookById(id) {
+    try {
+      const response = await axios.get(BooksService.host + "/Book?id=" + id)
+      return response.data
+      } catch(e) {
+          console.log(e)
+      }
+  }
+
 }

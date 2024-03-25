@@ -1,9 +1,11 @@
 import "./Books.css"
 import BooksService from "../../API/BooksService"
+import { Link } from "react-router-dom"
 
 export default function BookCard(props) {
     return(
         <div className="CardsFlex">
+        <Link to={"/Book/" + props.Book.id} >
         <div className= "card">
           <img src={BooksService.host + "/" + props.Book.url} alt="Продукт"/>
           <p className = "NameCard">{props.Book.name}</p>
@@ -13,6 +15,7 @@ export default function BookCard(props) {
           <span className="ReleaseDate">{props.Book.year}г</span>
           </div>  
         </div>
+        </Link>
         </div>
     )
 }

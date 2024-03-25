@@ -14,7 +14,7 @@ root.render(
     <Routes>
     <Route path='/' element={<Main></Main>}></Route>
     <Route path='/SearchBooks/:search' element={<SearchQuery></SearchQuery>}></Route>
-    <Route path='/Book' element={<ShowInfoBook/>}></Route>
+    <Route path='/Book/:id' element={<ShowInfoBook/>}></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

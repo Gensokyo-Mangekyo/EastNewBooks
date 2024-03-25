@@ -1,4 +1,5 @@
 import BucketButton from "../UI/button/BucketButton"
+import BooksService from "../../API/BooksService"
 import "./Books.css"
 
 export default function BookInformation(props) {
@@ -7,7 +8,7 @@ export default function BookInformation(props) {
              <div className="container">
              <div className="primary">
              <div className="LeftPart">
-             <img src={props.book.url}/>
+             <img src={BooksService.host + "/" + props.book.url}/>
 		        <p>{props.book.price}₽</p>
 		        <BucketButton>В корзину</BucketButton>
               </div>

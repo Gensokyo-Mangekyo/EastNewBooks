@@ -3,13 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Controllers
 {
     public class BooksController : Controller
     {
-
         [HttpPost]
         [Route("/AddBook")]
         public JsonResult AddBook([FromBody] Book BodyBook ,[FromServices] ApplicationContext applicationContext, [FromServices] ImageService imageService)
@@ -50,6 +48,13 @@ namespace Application.Controllers
             });
 
             return new JsonResult(searchBooks);
+        }
+
+        [HttpGet]
+        [Route("/Book")]
+        public IActionResult GetBookById(int id, [FromServices] ApplicationContext applicationContext)
+        {
+            return new JsonResult(applicationContext.Books.Where(item => item.Id == id).FirstOrDefault());
         }
 
     }

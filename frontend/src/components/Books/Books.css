@@ -15,6 +15,10 @@
     border-radius: 5px;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .NameCard {
     margin-top: 10px;
     font-size: 18px;

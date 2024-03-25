@@ -1,16 +1,26 @@
 import { useParams} from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import BooksService from "../API/BooksService";
 import Nav from "../components/UI/Nav/Nav";
 import { useNavigate } from "react-router-dom";
 import Search from "../components/UI/Search/Search";
 import BookInformation from "../components/Books/BookInfromation";
-import image from "../images/c_4_0.jpg"
 
 
 export default function ShowInfoBook() {
     const [Query,SetQuery] = useState("")
     const navigate = useNavigate();
+    const  { id } = useParams() 
+    const [Book,SetBook] = useState(null)
+
+    async function GetBook() {
+      const  DataBook = await BooksService.GetBookById(id);
+      SetBook(DataBook)
+    }
+
+    useEffect(()=>{
+      GetBook()
+    },[])
 
       return(
 
@@ -30,13 +40,7 @@ export default function ShowInfoBook() {
         navigate(searchUrl)
        }} />
 
-       <BookInformation book= {{
-        name: "a",
-        pages: 13,
-        year: 2204,
-        price: 500,
-        url: image
-       }} />
+        { Book ? <BookInformation book= {Book} /> : <p>Загрузка...</p> }
         </div>
         
     
