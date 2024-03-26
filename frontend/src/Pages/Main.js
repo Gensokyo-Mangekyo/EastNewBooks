@@ -13,7 +13,6 @@ export default function Main() {
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
-  const [ErrorPost,SetErrorPost] = useState("")
   const navigate = useNavigate();
 
   const SetValueFieldsCallback = async (value) => { 
@@ -27,35 +26,29 @@ export default function Main() {
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
-    SetErrorPost("Произошла ошибка при добавлении")
-    return true
+    return "Произошла ошибка при добавлении!"
    }
    if (Result.error) {
-    SetErrorPost(Result.error)
-    return true
+    return Result.error
    }
    else {
     const NewBooks = [...Books].push(Result)
-    console.log(NewBooks)
     Books.push(Result)
-    console.log(Books)
     SetBooks(NewBooks)
     SetAdminPanel(null)
    }
-   return false
+
   }
 
   const DeleteBook = async(value) => {
     const StatusCode = await BooksService.DeleteBookById(value[0])
    if (StatusCode !== 200) {
-    SetErrorPost("Не удалось удалить книгу с идентификатором " + value[0] + "!")
-    return true
+    return "Не удалось удалить книгу с идентификатором " + value[0] + "!"
    }
    else {
     await GetBooks()
     SetAdminPanel(null)
    }
-   return false
   }
 
 
@@ -96,7 +89,7 @@ export default function Main() {
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer value={{ ErrorPost,SetErrorPost }}  SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },

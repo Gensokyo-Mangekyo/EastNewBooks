@@ -8,9 +8,17 @@ export default function FieldsContainer(props) {
   const [error, SetError] = useState(); 
   const [ImageBytes,SetImageBytes] = useState()
   const FieldsValueArray = []
-
+  
   const ImageBytesCallback = function(NewImage) {
     SetImageBytes(NewImage)
+  }
+
+  async function handleSetValueFields() {
+    const Error = await props.SetValueFields(FieldsValueArray)
+                 if (Error)
+                  SetError(Error)
+                  else
+                  SetError(undefined)
   }
   
   const handleChildStateUpdate = (index, state) => {  //Callback функций для установки значения валидации
@@ -39,11 +47,7 @@ export default function FieldsContainer(props) {
                   }
                   if (ImageBytes)
                   FieldsValueArray.push(ImageBytes)
-                 const Error =  props.SetValueFields(FieldsValueArray)
-                 if (Error)
-                  SetError("Данные числового типа не прошли проверку!")
-                else
-                  SetError(undefined)
+                  handleSetValueFields()
                  } }>{props.TextButton}</Button>
                
              
