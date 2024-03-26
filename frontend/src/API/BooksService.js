@@ -10,8 +10,6 @@ export default class BooksService {
   static async GetBooks() {
     try {
     const response = await axios.get(BooksService.host + "/GetBooks")
-    console.log(response.headers)
-    console.log(response.data)
     return response.data
 
     } catch(e) {
@@ -43,6 +41,15 @@ export default class BooksService {
       return response.data
       } catch(e) {
           console.log(e)
+      }
+  }
+
+  static async DeleteBookById(id) {
+    try {
+      const response = await axios.post(BooksService.host + "/DeleteBook?id=" + id)
+      return 200  
+      } catch(e) {
+          return 400
       }
   }
 

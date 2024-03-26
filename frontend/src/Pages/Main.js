@@ -25,17 +25,39 @@ export default function Main() {
       Url: value[4],
     }
    const Result = await BooksService.AddBook(JsonData)
+   if (Result === undefined)
+   {
+    SetErrorPost("Произошла ошибка при добавлении")
+    return true
+   }
    if (Result.error) {
     SetErrorPost(Result.error)
     return true
    }
    else {
     const NewBooks = [...Books].push(Result)
+    console.log(NewBooks)
+    Books.push(Result)
+    console.log(Books)
     SetBooks(NewBooks)
     SetAdminPanel(null)
    }
    return false
   }
+
+  const DeleteBook = async(value) => {
+    const StatusCode = await BooksService.DeleteBookById(value[0])
+   if (StatusCode !== 200) {
+    SetErrorPost("Не удалось удалить книгу с идентификатором " + value[0] + "!")
+    return true
+   }
+   else {
+    await GetBooks()
+    SetAdminPanel(null)
+   }
+   return false
+  }
+
 
   async function GetBooks() {
     const Books = await BooksService.GetBooks();
@@ -97,7 +119,7 @@ export default function Main() {
         Name: "Добавить книгу"
        },
        {
-        Click: (e) => { SetAdminPanel(<FieldsContainer  Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
+        Click: (e) => { SetAdminPanel(<FieldsContainer SetValueFields = {DeleteBook}  Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
           maxLength: 100
         },
        },]} /> ) 

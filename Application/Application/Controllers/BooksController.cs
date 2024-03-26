@@ -57,5 +57,23 @@ namespace Application.Controllers
             return new JsonResult(applicationContext.Books.Where(item => item.Id == id).FirstOrDefault());
         }
 
+        [HttpPost]
+        [Route("/DeleteBook")]
+        public IActionResult DeleteBookById(int id, [FromServices] ApplicationContext applicationContext)
+        {
+            if (id < 0)
+                return BadRequest();
+
+            var Element = applicationContext.Books.Where(x => x.Id == id).FirstOrDefault();
+
+            if (Element != null)
+            {
+                applicationContext.Books.Remove(Element);
+                applicationContext.SaveChanges();
+                return Ok();
+            }
+           return BadRequest();
+        }
+
     }
 }

@@ -41,7 +41,7 @@ export default function FieldsContainer(props) {
                   FieldsValueArray.push(ImageBytes)
                  const Error =  props.SetValueFields(FieldsValueArray)
                  if (Error)
-                 SetError("Данные числового типа не прошли проверку!")
+                  SetError("Данные числового типа не прошли проверку!")
                 else
                   SetError(undefined)
                  } }>{props.TextButton}</Button>
