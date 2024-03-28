@@ -103,6 +103,8 @@ text-align: center;
 font-size: 32px;
 line-height: 38px;
 word-wrap: break-all;
+cursor: pointer;
+user-select: none;
 }
 
 .LeftPart img {
@@ -123,6 +125,8 @@ font-size: 40px;
 margin: 15px auto;
 line-height: 38px;
 word-wrap: break-all;
+cursor: pointer;
+user-select: none;
 
 }
 
@@ -141,6 +145,8 @@ line-height: 38px;
 color: #ff0052;
 font-weight: bold;
 margin-bottom: 0;
+cursor: pointer;
+user-select: none;
 }
 
 .description {

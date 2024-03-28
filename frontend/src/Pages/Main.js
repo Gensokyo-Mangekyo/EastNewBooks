@@ -54,12 +54,24 @@ export default function Main() {
 
   async function GetBooks() {
     const Books = await BooksService.GetBooks();
-    if (Books)
+    if (Books) {
     SetBooks(Books)
+    return Books
+    }
   }
 
   useEffect( ()=> {
-   GetBooks()
+    GetBooks()
+    const intervalId = setInterval( async () => {
+      const IsBooks = await GetBooks()
+      if (IsBooks)
+      clearInterval(intervalId);
+    }, 2000);
+
+    return () => {
+      clearInterval(intervalId); // Очистка интервала перед размонтированием компонента
+    };
+
     },[])
 
   return (
