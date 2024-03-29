@@ -13,15 +13,21 @@ export default function ShowInfoBook() {
     const navigate = useNavigate();
     const  { id } = useParams() 
     const [Book,SetBook] = useState(null)
+    const [DataBook,SetDataBook] = useState(null)
 
     async function GetBook() {
       const  DataBook = await BooksService.GetBookById(id);
       SetBook(DataBook)
+      SetDataBook(DataBook)
     }
 
     useEffect(()=>{
       GetBook()
     },[])
+
+    function DataBookCallback(Data) {
+      SetDataBook(Data)
+    }
 
       return(
 
@@ -36,8 +42,17 @@ export default function ShowInfoBook() {
 
            <AdminNav Navigate={[
             {
-              Click: (e)=> {
-
+              Click: async (e)=> {
+                const UpdatedBook = {
+                  Id: Book.id,
+                  Name: DataBook.name.Value,
+                  Pages: DataBook.pages.Value,
+                  Price: DataBook.price.Value,
+                  Url: Book.url,
+                  Year: DataBook.year.Value,
+                }
+                  await BooksService.UpdateBook(UpdatedBook)
+                  navigate("/")
               },
               Name: "Сохранить изменения"
             },
@@ -65,7 +80,7 @@ export default function ShowInfoBook() {
         navigate(searchUrl)
        }} />
 
-        { Book ? <BookInformation book= {Book} /> : <p>Загрузка...</p> }
+        { Book ? <BookInformation SetNewDataBook = {DataBookCallback}  book= {Book} /> : <p>Загрузка...</p> }
         </div>
         
     

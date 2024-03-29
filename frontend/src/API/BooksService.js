@@ -46,8 +46,17 @@ export default class BooksService {
 
   static async DeleteBookById(id) {
     try {
-      const response = await axios.post(BooksService.host + "/DeleteBook?id=" + id)
+      await axios.post(BooksService.host + "/DeleteBook?id=" + id)
       return 200  
+      } catch(e) {
+          return 400
+      }
+  }
+
+  static async UpdateBook(Book) {
+    try {
+      const response = await axios.post(BooksService.host + "/UpdateBook",Book)
+      return response.status
       } catch(e) {
           return 400
       }

@@ -76,5 +76,15 @@ namespace Application.Controllers
            return BadRequest();
         }
 
+        [HttpPost]
+        [Route("/UpdateBook")]
+        public IActionResult UpdateBook([FromBody] Book book, [FromServices] ApplicationContext applicationContext)
+        {
+            applicationContext.Books.Update(book);
+            applicationContext.SaveChanges();
+            return Ok();
+
+        }
+
     }
 }

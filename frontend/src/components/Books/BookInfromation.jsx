@@ -21,6 +21,9 @@ export default function BookInformation(props) {
 		const updatedValue = { ...ChangingValue }
 		updatedValue[Key].Changing = Value
 		SetChangingValue(updatedValue)
+		if (Value === false) {
+			props.SetNewDataBook(updatedValue)
+		}
 	}
 
 	function NumberValue(e,key) {
@@ -48,6 +51,7 @@ export default function BookInformation(props) {
 			const updatedValue = { ...ChangingValue }
 			updatedValue[Key].Changing = false
 			SetChangingValue(updatedValue)
+			props.SetNewDataBook(updatedValue)
 		  }
 	} 
 	
