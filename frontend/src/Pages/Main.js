@@ -4,8 +4,13 @@ import AdminNav from "../components/UI/Nav/AdminNav";
 import BooksContainer from "../components/BooksContrainer";
 import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
-import { useState,useEffect,createContext } from "react";
+import { useState,useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import FieldsModal from "../components/UI/ModalWindows/FieldsModal";
+import InputValue from "../components/UI/input/InputValue"
+import LabelText from "../components/UI/label/LabelText";
+import TextArea from "../components/UI/input/TextArea";
+import StyleButton from "../components/UI/button/StyleButton";
 
 
 export default function Main() {
@@ -13,6 +18,8 @@ export default function Main() {
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
+  const [Modal,SetModal] = useState(false)
+  const [ExtraValue,SetExtraValue] = useState({})
   const navigate = useNavigate();
 
   const SetValueFieldsCallback = async (value) => { 
@@ -32,14 +39,13 @@ export default function Main() {
     return Result.error
    }
    else {
+    ClearValueModal()
     const NewBooks = [...Books].push(Result)
     Books.push(Result)
     SetBooks(NewBooks)
     SetAdminPanel(null)
    }
-
   }
-
   const DeleteBook = async(value) => {
     const StatusCode = await BooksService.DeleteBookById(value[0])
    if (StatusCode !== 200) {
@@ -51,6 +57,9 @@ export default function Main() {
    }
   }
 
+  function ChangeExtraValue (key,e) {
+    const NewValue= {...ExtraValue,[key]: e}; SetExtraValue(NewValue);
+  }
 
   async function GetBooks() {
     const Books = await BooksService.GetBooks();
@@ -58,6 +67,16 @@ export default function Main() {
     SetBooks(Books)
     return Books
     }
+  }
+
+  function ClearValueModal() {
+    if (ExtraValue["category"]) {
+    ExtraValue["category"].target.value = ""
+    }
+    if (ExtraValue["publisher"])
+    ExtraValue["publisher"].target.value = ""
+    if (ExtraValue["description"])
+    ExtraValue["description"].target.value = ""
   }
 
   useEffect( ()=> {
@@ -69,11 +88,10 @@ export default function Main() {
     }, 2000);
 
     return () => {
-      clearInterval(intervalId); // Очистка интервала перед размонтированием компонента
+      clearInterval(intervalId);
     };
 
     },[])
-
   return (
     <div>
            <Nav Navigate = {[{
@@ -97,11 +115,18 @@ export default function Main() {
       Name: "Личный кабинет"
      },
      ]} />
-    
+          <FieldsModal visible={Modal} setVisible={SetModal}> 
+          <LabelText >Категория</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("category",e)}}/>
+    <LabelText>Издатель</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("publisher",e)}}  /> 
+    <LabelText>Описание</LabelText> <TextArea onChange={(e)=> { ChangeExtraValue("description",e)}} />
+    <StyleButton onClick = {(e)=> {SetModal(false); }}>Подтвердить</StyleButton>
+          </FieldsModal>
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null)}} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer  ModalWindow={()=> {
+            SetModal(true)
+          }} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null); ClearValueModal() }} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -134,9 +159,9 @@ export default function Main() {
      ]} ></AdminNav>}
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
-     }}  Click={(e)=> {
+     }}  Click={async (e)=> {
           const searchUrl = `/SearchBooks/` + Query;
-          navigate(searchUrl)
+         navigate(searchUrl)
      }} />
     
     <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} />

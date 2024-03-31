@@ -33,6 +33,8 @@ export default function FieldsContainer(props) {
                {props.Fields.map((x,index) => {
                  return  <Field SetImageBytes = {ImageBytesCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
                }) }
+
+               {props.ModalWindow !== undefined ? <div className="ModalButtonContainer" ><Button onClick={props.ModalWindow}>Дополнительные значения</Button></div> : ""}
                  
                  </div>
                  <div className="FieldsContainerButtons">
