@@ -2,7 +2,7 @@ import Field from "../components/Field";
 import Button from "./UI/button/Button";
 import { useState } from "react";
 
-export default function FieldsContainer(props) {
+export default function FieldsContainer({children,...props}) {
 
   const [childStates, setChildStates] = useState([]); //Массив состояний валидаций на пустые данные
   const [error, SetError] = useState(); 
@@ -27,6 +27,7 @@ export default function FieldsContainer(props) {
       setChildStates(updatedChildStates);
   };
     return <div className="FieldsContainer">
+      {children}
         <h1>{props.Name}</h1>
         {error !== undefined  ? <h2>{error}</h2> : ""}
             <div className="FieldElements">

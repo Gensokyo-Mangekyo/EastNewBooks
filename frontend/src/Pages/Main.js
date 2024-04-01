@@ -29,7 +29,11 @@ export default function Main() {
       Pages: value[2],
       Year: value[3],
       Url: value[4],
+      Category: ExtraValue["category"],
+      Publisher: ExtraValue["publisher"],
+      Description: ExtraValue["description"]
     }
+    
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
@@ -58,7 +62,8 @@ export default function Main() {
   }
 
   function ChangeExtraValue (key,e) {
-    const NewValue= {...ExtraValue,[key]: e}; SetExtraValue(NewValue);
+    const NewValue= {...ExtraValue,[key]: e}; 
+    SetExtraValue(NewValue);
   }
 
   async function GetBooks() {
@@ -126,7 +131,7 @@ export default function Main() {
         Click: (e) => { 
           SetAdminPanel( <FieldsContainer  ModalWindow={()=> {
             SetModal(true)
-          }} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null); ClearValueModal() }} Name="Добавление книги" Fields = {[
+          }} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null); ClearValueModal();  }} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -168,4 +173,3 @@ export default function Main() {
     </div>
   );
 }
-

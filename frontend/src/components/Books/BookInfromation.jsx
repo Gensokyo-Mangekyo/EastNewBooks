@@ -16,7 +16,7 @@ export default function BookInformation(props) {
 		description: {Changing: false, Value: props.book.description }
 	})
 
-
+	
 	function SetInput(Key,Value) {
 		const updatedValue = { ...ChangingValue }
 		updatedValue[Key].Changing = Value
@@ -56,18 +56,19 @@ export default function BookInformation(props) {
 	} 
 	
 	const UndefinedValue = {
-		category: ChangingValue["category"].Value !== undefined ? <p onDoubleClick={() => {SetInput("category",true)}} >Категория: {ChangingValue["category"].Value}</p> : <p onDoubleClick={() => {SetInput("category",true)}} >Категория: Отсуствует</p>,
-		publisher: ChangingValue["publisher"].Value !== undefined ? <p onDoubleClick={() => {SetInput("publisher",true)}} >Категория: {ChangingValue["publisher"].Value}</p> : <p onDoubleClick={() => {SetInput("publisher",true)}} >Издатель: Неизвестен</p>,
-		description: ChangingValue["description"].Value !== undefined ? <p onDoubleClick={() => {SetInput("description",true)}} >Категория: {ChangingValue["description"].Value}</p> : <p onDoubleClick={() => {SetInput("description",true)}} >Описание книги отсуствует</p>,
+		category: ChangingValue["category"].Value !== null ? <p onDoubleClick={() => {SetInput("category",true)}} >Категория: {ChangingValue["category"].Value}</p> : <p onDoubleClick={() => {SetInput("category",true)}} >Категория: Отсуствует</p>,
+		publisher: ChangingValue["publisher"].Value !== null  ? <p onDoubleClick={() => {SetInput("publisher",true)}} >Категория: {ChangingValue["publisher"].Value}</p> : <p onDoubleClick={() => {SetInput("publisher",true)}} >Издатель: Неизвестен</p>,
+		description: ChangingValue["description"].Value !== null ? <p onDoubleClick={() => {SetInput("description",true)}} >Категория: {ChangingValue["description"].Value}</p> : <p onDoubleClick={() => {SetInput("description",true)}} >Описание книги отсуствует</p>,
 	}
+
 
 	function UndefinedValueChange(Key,text,defaultText,Length) {
 		if (ChangingValue[Key].Changing === true) {
-			if (ChangingValue[Key].Value === undefined)
+			if (ChangingValue[Key].Value === null)
 	UndefinedValue[Key] = <InputValue onKeyDown={(e)=> {ConfirmInput(e,Key)}} onBlur={(e)=> {SetInput(Key,false)}} maxLength={Length} onChange= {(e)=>{Value(e,Key)}} /> 
 	else UndefinedValue[Key] = <InputValue onKeyDown={(e)=> {ConfirmInput(e,Key)}} onBlur={(e)=> {SetInput(Key,false)}} defaultValue={ChangingValue[Key].Value} maxLength={Length} onChange= {(e)=>{Value(e,Key)}} /> 
 		}
-		else UndefinedValue[Key] = ChangingValue[Key].Value !== undefined ? <p onDoubleClick={() => {SetInput(Key,true)}} >{text !== null ? text + ": " + ChangingValue[Key].Value : ChangingValue[Key].Value  }</p> : <p onDoubleClick={() => {SetInput(Key,true)}} >{defaultText}</p>
+		else UndefinedValue[Key] = ChangingValue[Key].Value !== null ? <p onDoubleClick={() => {SetInput(Key,true)}} >{text !== null ? text + ": " + ChangingValue[Key].Value : ChangingValue[Key].Value  }</p> : <p onDoubleClick={() => {SetInput(Key,true)}} >{defaultText}</p>
 	}
 
 	UndefinedValueChange("category","Категория","Категория: Отсуствует",15)
