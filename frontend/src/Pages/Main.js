@@ -4,13 +4,8 @@ import AdminNav from "../components/UI/Nav/AdminNav";
 import BooksContainer from "../components/BooksContrainer";
 import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
-import { useState,useEffect,useRef } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FieldsModal from "../components/UI/ModalWindows/FieldsModal";
-import InputValue from "../components/UI/input/InputValue"
-import LabelText from "../components/UI/label/LabelText";
-import TextArea from "../components/UI/input/TextArea";
-import StyleButton from "../components/UI/button/StyleButton";
 
 
 export default function Main() {
@@ -18,8 +13,6 @@ export default function Main() {
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
-  const [Modal,SetModal] = useState(false)
-  const [ExtraValue,SetExtraValue] = useState({})
   const navigate = useNavigate();
 
   const SetValueFieldsCallback = async (value) => { 
@@ -29,11 +22,15 @@ export default function Main() {
       Pages: value[2],
       Year: value[3],
       Url: value[4],
-      Category: ExtraValue["category"],
-      Publisher: ExtraValue["publisher"],
-      Description: ExtraValue["description"]
+      Category: {
+        Name: value[5],
+      },
+      Publisher: {
+        Name: value[6],
+      },
+      Description: value[7]
     }
-    
+
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
@@ -43,7 +40,6 @@ export default function Main() {
     return Result.error
    }
    else {
-    ClearValueModal()
     const NewBooks = [...Books].push(Result)
     Books.push(Result)
     SetBooks(NewBooks)
@@ -61,27 +57,12 @@ export default function Main() {
    }
   }
 
-  function ChangeExtraValue (key,e) {
-    const NewValue= {...ExtraValue,[key]: e}; 
-    SetExtraValue(NewValue);
-  }
-
   async function GetBooks() {
     const Books = await BooksService.GetBooks();
     if (Books) {
     SetBooks(Books)
     return Books
     }
-  }
-
-  function ClearValueModal() {
-    if (ExtraValue["category"]) {
-    ExtraValue["category"].target.value = ""
-    }
-    if (ExtraValue["publisher"])
-    ExtraValue["publisher"].target.value = ""
-    if (ExtraValue["description"])
-    ExtraValue["description"].target.value = ""
   }
 
   useEffect( ()=> {
@@ -120,18 +101,11 @@ export default function Main() {
       Name: "Личный кабинет"
      },
      ]} />
-          <FieldsModal visible={Modal} setVisible={SetModal}> 
-          <LabelText >Категория</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("category",e)}}/>
-    <LabelText>Издатель</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("publisher",e)}}  /> 
-    <LabelText>Описание</LabelText> <TextArea onChange={(e)=> { ChangeExtraValue("description",e)}} />
-    <StyleButton onClick = {(e)=> {SetModal(false); }}>Подтвердить</StyleButton>
-          </FieldsModal>
+          
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
         Click: (e) => { 
-          SetAdminPanel( <FieldsContainer  ModalWindow={()=> {
-            SetModal(true)
-          }} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null); ClearValueModal();  }} Name="Добавление книги" Fields = {[
+          SetAdminPanel( <FieldsContainer  ModalWindow={true} SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetAdminPanel(null);  }} Name="Добавление книги" Fields = {[
             {Name: "Наименование", Attributes: {
               maxLength: 100
             },
@@ -149,7 +123,7 @@ export default function Main() {
           },
           },
           {Name: "Изображение", Type: "DropImage"}
-     ]} TextButton = "Добавить новую книгу"  />)
+     ]} TextButton = "Добавить новую книгу"  > </FieldsContainer>)
         },
         Name: "Добавить книгу"
        },

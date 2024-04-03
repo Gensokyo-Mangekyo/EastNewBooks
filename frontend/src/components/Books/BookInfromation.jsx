@@ -16,7 +16,6 @@ export default function BookInformation(props) {
 		description: {Changing: false, Value: props.book.description }
 	})
 
-	
 	function SetInput(Key,Value) {
 		const updatedValue = { ...ChangingValue }
 		updatedValue[Key].Changing = Value
@@ -45,7 +44,6 @@ export default function BookInformation(props) {
 		ChangingValue[key].Value = e.target.value;
 	}
 	
-
 	function ConfirmInput(e,Key) {
 		if (e.key === 'Enter') {
 			const updatedValue = { ...ChangingValue }
@@ -57,8 +55,8 @@ export default function BookInformation(props) {
 	
 	const UndefinedValue = {
 		category: ChangingValue["category"].Value !== null ? <p onDoubleClick={() => {SetInput("category",true)}} >Категория: {ChangingValue["category"].Value}</p> : <p onDoubleClick={() => {SetInput("category",true)}} >Категория: Отсуствует</p>,
-		publisher: ChangingValue["publisher"].Value !== null  ? <p onDoubleClick={() => {SetInput("publisher",true)}} >Категория: {ChangingValue["publisher"].Value}</p> : <p onDoubleClick={() => {SetInput("publisher",true)}} >Издатель: Неизвестен</p>,
-		description: ChangingValue["description"].Value !== null ? <p onDoubleClick={() => {SetInput("description",true)}} >Категория: {ChangingValue["description"].Value}</p> : <p onDoubleClick={() => {SetInput("description",true)}} >Описание книги отсуствует</p>,
+		publisher: ChangingValue["publisher"].Value !== null  ? <p onDoubleClick={() => {SetInput("publisher",true)}} >Издатель: {ChangingValue["publisher"].Value}</p> : <p onDoubleClick={() => {SetInput("publisher",true)}} >Издатель: Неизвестен</p>,
+		description: ChangingValue["description"].Value !== "" ? <p onDoubleClick={() => {SetInput("description",true)}} >{ChangingValue["description"].Value}</p> : <p onDoubleClick={() => {SetInput("description",true)}} >Описание книги отсуствует</p>,
 	}
 
 

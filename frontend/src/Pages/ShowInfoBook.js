@@ -34,8 +34,8 @@ export default function ShowInfoBook() {
         Price: DataBook.price.Value,
         Url: Book.url,
         Year: DataBook.year.Value,
-        Publisher: DataBook.publisher.Value,
-        Category: DataBook.category.Value,
+        Publisher: { Name:  DataBook.publisher.Value},
+        Category: { Name: DataBook.category.Value },
         Description: DataBook.description.Value
       }
 

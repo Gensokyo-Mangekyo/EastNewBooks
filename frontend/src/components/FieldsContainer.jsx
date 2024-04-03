@@ -1,12 +1,19 @@
 import Field from "../components/Field";
 import Button from "./UI/button/Button";
+import FieldsModal from "./UI/ModalWindows/FieldsModal";
+import InputValue from "../components/UI/input/InputValue"
+import LabelText from "../components/UI/label/LabelText";
+import TextArea from "../components/UI/input/TextArea";
+import StyleButton from "../components/UI/button/StyleButton";
 import { useState } from "react";
 
-export default function FieldsContainer({children,...props}) {
+export default function FieldsContainer(props) {
 
   const [childStates, setChildStates] = useState([]); //Массив состояний валидаций на пустые данные
   const [error, SetError] = useState(); 
   const [ImageBytes,SetImageBytes] = useState()
+  const [Modal,SetModal] = useState(false)
+  const [ExtraValue,SetExtraValue] = useState({})
   const FieldsValueArray = []
   
   const ImageBytesCallback = function(NewImage) {
@@ -20,6 +27,11 @@ export default function FieldsContainer({children,...props}) {
                   else
                   SetError(undefined)
   }
+
+  function ChangeExtraValue (key,value) {
+    const NewValue= {...ExtraValue,[key]: value}; 
+    SetExtraValue(NewValue);
+  }
   
   const handleChildStateUpdate = (index, state) => {  //Callback функций для установки значения валидации
       const updatedChildStates = [...childStates];
@@ -27,7 +39,6 @@ export default function FieldsContainer({children,...props}) {
       setChildStates(updatedChildStates);
   };
     return <div className="FieldsContainer">
-      {children}
         <h1>{props.Name}</h1>
         {error !== undefined  ? <h2>{error}</h2> : ""}
             <div className="FieldElements">
@@ -35,8 +46,16 @@ export default function FieldsContainer({children,...props}) {
                  return  <Field SetImageBytes = {ImageBytesCallback}  Name={x.Name} Change = {(value)=> { handleChildStateUpdate(index,value)  }} InputAttributes = {x.Attributes} Type = {x.Type} ></Field>
                }) }
 
-               {props.ModalWindow !== undefined ? <div className="ModalButtonContainer" ><Button onClick={props.ModalWindow}>Дополнительные значения</Button></div> : ""}
-                 
+               {props.ModalWindow !== undefined ? <div>
+                <FieldsModal visible={Modal} setVisible={SetModal}>
+                <LabelText >Категория</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("category",e.target.value)}}/>
+                <LabelText>Издатель</LabelText> <InputValue onChange={(e)=> {ChangeExtraValue("publisher",e.target.value)}}  /> 
+                <LabelText>Описание</LabelText> <TextArea onChange={(e)=> { ChangeExtraValue("description",e.target.value)}} />
+                 <StyleButton onClick = {(e)=> {SetModal(false); }}>Подтвердить</StyleButton>
+                </FieldsModal>
+                 <div className="ModalButtonContainer" ><Button onClick={()=> {
+                      SetModal(true)
+               }}>Дополнительные значения</Button></div> </div> : ""}
                  </div>
                  <div className="FieldsContainerButtons">
                  <Button  onClick={function() {
@@ -48,14 +67,17 @@ export default function FieldsContainer({children,...props}) {
                       if (typeof(state) === "string" || typeof(state) === "number")
                       FieldsValueArray.push(state)
                   }
-                  if (ImageBytes)
                   FieldsValueArray.push(ImageBytes)
+                  FieldsValueArray.push(ExtraValue["category"])
+                  FieldsValueArray.push(ExtraValue["publisher"])
+                  FieldsValueArray.push(ExtraValue["description"])
+                  console.log(FieldsValueArray)
                   handleSetValueFields()
                  } }>{props.TextButton}</Button>
                
              
-                 <Button  onClick={props.Cancel}>Отмена</Button>
-            
+                 <Button  onClick={()=> {props.Cancel(); console.log(ExtraValue)}}>Отмена</Button>
+               
                  </div>
         </div>
 }
