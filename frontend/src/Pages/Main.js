@@ -6,13 +6,14 @@ import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Pagination from "../components/UI/Pagination/Pagination";
 
 export default function Main() {
 
   const [AdminPanel,SetAdminPanel] = useState(null)
   const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
+  const [Page,SetPage] = useState(1)
   const navigate = useNavigate();
 
   const SetValueFieldsCallback = async (value) => { 
@@ -139,11 +140,15 @@ export default function Main() {
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {
+      if (Query === "") return
           const searchUrl = `/SearchBooks/` + Query;
          navigate(searchUrl)
      }} />
     
     <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} />
+     <Pagination prev={(e)=>{ if (Page-1 === 0) SetPage(Page => 3); else SetPage(Page => Page-1)}} next={(e)=>{
+      if (Page+1 > 3) SetPage(Page => 1); else  SetPage(Page => Page+1)
+     }}>{Page}</Pagination>
     </div>
   );
 }

@@ -1,0 +1,29 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
+  
+  .arrow {
+    background-color: white;
+    color: #2553ea;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px 10px;
+    outline: none;
+    border-radius: 3px;
+  }
+  
+  .page-number {
+    margin: 0 10px;
+    font-size: 16px;
+    padding: 8px;
+    font-weight: bold;
+    border: none;
+    background-color: #ff0052;
+    color: white;
+    width: 40px;
+    text-align: center;
+     border-radius: 3px;
+  }
