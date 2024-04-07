@@ -41,8 +41,8 @@ export default function Main() {
     return Result.error
    }
    else {
-    const NewBooks = [...Books].push(Result)
-    Books.push(Result)
+    const NewBooks = [...Books]
+    NewBooks.push(Result);
     SetBooks(NewBooks)
     SetAdminPanel(null)
    }
@@ -140,7 +140,15 @@ export default function Main() {
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {
-      if (Query === "") return
+      const Symbols = ["#","?","/"," ","."]
+      let CheckedSymbols = true
+       Symbols.forEach(symbol => {
+    if (Query.startsWith(symbol)) {
+        CheckedSymbols = false;
+        return; 
+    }
+});
+          if(!CheckedSymbols || Query === "") return;
           const searchUrl = `/SearchBooks/` + Query;
          navigate(searchUrl)
      }} />

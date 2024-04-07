@@ -12,6 +12,7 @@ body {
 	max-width: 60%; 
 	margin-bottom: 24px;
     margin-top: 22px;
+  overflow: hidden;
   }
 
   .BooksContainer h1 {
@@ -22,6 +23,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 15px;
+  flex-wrap: wrap;
 }
 
 .FieldsContainer {
