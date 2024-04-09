@@ -14,6 +14,7 @@ export default function Main() {
   const [Books,SetBooks] = useState(undefined)
   const [Query,SetQuery] = useState("")
   const [Page,SetPage] = useState(1)
+  const [LastPage,SetLastPage] = useState(1)
   const navigate = useNavigate();
 
   const SetValueFieldsCallback = async (value) => { 
@@ -58,25 +59,45 @@ export default function Main() {
    }
   }
 
-  async function GetBooks() {
-    const Books = await BooksService.GetBooks();
+  async function GetBooks(NewPage) {
+    let Books = null
+    if (NewPage)
+    Books = await BooksService.GetBooks(NewPage);
+  else Books = await BooksService.GetBooks(Page);
     if (Books) {
     SetBooks(Books)
     return Books
     }
   }
 
+  async function GetLastPage() {
+    const Last = await BooksService.LastPage();
+    SetLastPage(Last)
+  }
+
+  async function SetNewPage(NewPage) {
+    SetPage(NewPage)
+    await GetBooks(NewPage)
+  }
+
   useEffect( ()=> {
-    GetBooks()
+  let IsBooks = GetBooks()
+    if (IsBooks) {
+      GetLastPage()
+    }
+    else {
     const intervalId = setInterval( async () => {
-      const IsBooks = await GetBooks()
-      if (IsBooks)
+      IsBooks = GetBooks();
+      if (IsBooks) {
+      await GetLastPage()
       clearInterval(intervalId);
+      }
     }, 2000);
 
     return () => {
       clearInterval(intervalId);
     };
+  }
 
     },[])
   return (
@@ -154,8 +175,10 @@ export default function Main() {
      }} />
     
     <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} />
-     <Pagination prev={(e)=>{ if (Page-1 === 0) SetPage(Page => 3); else SetPage(Page => Page-1)}} next={(e)=>{
-      if (Page+1 > 3) SetPage(Page => 1); else  SetPage(Page => Page+1)
+     <Pagination prev={ async (e)=>{ if (Page-1 === 0) 
+     await SetNewPage(LastPage);
+      else await  SetNewPage(Page-1)}} next={ async (e)=>{
+      if (Page+1 > LastPage) await SetNewPage(1); else await SetNewPage(Page+1) 
      }}>{Page}</Pagination>
     </div>
   );

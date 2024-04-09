@@ -9,12 +9,15 @@ namespace Application.Controllers
 {
     public class BooksController : Controller
     {
+        readonly int Limit = 2;
+
         [HttpPost]
         [Route("/AddBook")]
         public JsonResult AddBook([FromBody] Book BodyBook ,[FromServices] ApplicationContext applicationContext, [FromServices] ImageService imageService)
         {
             if (BodyBook != null)
             {
+                if (applicationContext.Books.Where(x=> x.Name == BodyBook.Name).FirstOrDefault() != null) return new JsonResult(new { Error = "Книга с таким названием уже существует!" });
                 Book CloneBook = BodyBook.Clone() as Book;
                 CloneBook.Url = imageService.GetUrImage("ImagesBooks", CloneBook.Name, CloneBook.Url);
                 if (CloneBook.Category != null)
@@ -50,17 +53,39 @@ namespace Application.Controllers
             }
         }
 
+        private int GetLastPage(IEnumerable<Book> books)
+        {
+            float DivPage = (float)books.Count()  / (float)Limit;
+            if (DivPage % 1 != 0)
+            {
+                int roundedNumber = (int)Math.Ceiling(DivPage);
+                return roundedNumber;
+            }
+            if (DivPage == 0)
+            {
+                DivPage = 1;
+            }
+            return (int)DivPage;
+        }
+
+        [HttpGet]
+        [Route("/GetLastPage")]
+        public int GetBooks([FromServices] ApplicationContext applicationContext)
+        {
+            return GetLastPage(applicationContext.Books);
+        }
+
         [HttpGet]
         [Route("/GetBooks")]
-        public IActionResult GetBooks([FromServices] ApplicationContext applicationContext)
+        public IActionResult GetBooks(int page, [FromServices] ApplicationContext applicationContext)
         {
-            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).ToList());
+            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
         }
 
 
         [HttpGet]
         [Route("/SearchBooks")]
-        public IActionResult SearchBooks(string query, [FromServices] ApplicationContext applicationContext)
+        public IActionResult SearchBooks(string query,int page, [FromServices] ApplicationContext applicationContext)
         {
             List<Book> searchBooks = new List<Book>();
 
@@ -69,9 +94,24 @@ namespace Application.Controllers
                 if (x.Name.ToLower().Contains(query.ToLower()))
                     searchBooks.Add(x);
             });
-
-            return new JsonResult(searchBooks);
+            int LastPage = GetLastPage(searchBooks);
+            int Take = page * Limit;
+            var Books = searchBooks.Take(Take).TakeLast(Limit).ToList();
+            if (Take > searchBooks.Count())
+            {
+                Take = Take - searchBooks.Count();
+                Books = searchBooks.TakeLast(Take).ToList();
+                foreach (var item in Books)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            return new JsonResult(new { 
+            Last = LastPage,
+            Books = Books
+                });
         }
+
 
         [HttpGet]
         [Route("/Book")]

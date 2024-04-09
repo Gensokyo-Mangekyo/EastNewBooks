@@ -79,13 +79,6 @@ export default function ShowInfoBook() {
             },
            ]} />
 
-<Search Change = {(e)=> {
-        SetQuery(e.target.value)
-       }} Click={(e)=> {
-        const searchUrl = `/SearchBooks/` + Query;
-        navigate(searchUrl)
-       }} />
-
         { Book ? <BookInformation SetNewDataBook = {DataBookCallback}  book= {Book} /> : <p>Загрузка...</p> }
         </div>
         

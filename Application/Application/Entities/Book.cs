@@ -9,7 +9,7 @@ namespace Application.Entities
     {
         public int Id { get; set; }
         public string Url { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
         public string Name { get; set; }
         public int Pages { get; set; }
         public decimal Price { get; set; }
@@ -19,7 +19,7 @@ namespace Application.Entities
         public int CategoryId { get; set; }
         public int PublisherId { get; set; }
 
-        public Book(int id, string url, string year, string name, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
+        public Book(int id, string url, int year, string name, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
         {
             Id = id;
             Url = url;

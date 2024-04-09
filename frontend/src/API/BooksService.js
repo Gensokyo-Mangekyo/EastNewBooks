@@ -7,9 +7,9 @@ export default class BooksService {
     //static host = "https://localhost:44344"
     static host = "http://localhost:5000"
 
-  static async GetBooks() {
+  static async GetBooks(Page) {
     try {
-    const response = await axios.get(BooksService.host + "/GetBooks")
+    const response = await axios.get(BooksService.host + "/GetBooks?page="+Page)
     return response.data
 
     } catch(e) {
@@ -26,9 +26,10 @@ export default class BooksService {
     }
   }
 
-  static async SearchBooks(query) {
+  static async SearchBooks(query,page) {
+    if (page === undefined) page = 1
     try {
-      const response = await axios.get(BooksService.host + "/SearchBooks?query=" + query)
+      const response = await axios.get(BooksService.host + "/SearchBooks?query=" + query + "&page="+page)
       return response.data
       } catch(e) {
           console.log(e)
@@ -61,5 +62,14 @@ export default class BooksService {
           return 400
       }
   }
+
+  static async LastPage() {
+    try {
+    const response = await axios.get(BooksService.host + "/GetLastPage") 
+    return response.data
+    } catch(e) {
+      console.log(e)
+  }
+}
 
 }

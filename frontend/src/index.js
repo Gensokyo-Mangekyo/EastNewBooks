@@ -13,7 +13,7 @@ root.render(
     <BrowserRouter>
     <Routes>
     <Route path='/' element={<Main></Main>}></Route>
-    <Route path='/SearchBooks/:search' element={<SearchQuery></SearchQuery>}></Route>
+    <Route path='/SearchBooks/:searchParam' element={<SearchQuery></SearchQuery>}></Route>
     <Route path='/Book/:id' element={<ShowInfoBook/>}></Route>
     </Routes>
     </BrowserRouter>
