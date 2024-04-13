@@ -4,16 +4,17 @@ import BooksService from "../API/BooksService";
 import Nav from "../components/UI/Nav/Nav";
 import { useNavigate } from "react-router-dom";
 import AdminNav from "../components/UI/Nav/AdminNav";
-import Search from "../components/UI/Search/Search";
+import Category from "../components/UI/Category/Category";
 import BookInformation from "../components/Books/BookInfromation";
 
 
 export default function ShowInfoBook() {
-    const [Query,SetQuery] = useState("")
     const navigate = useNavigate();
     const  { id } = useParams() 
     const [Book,SetBook] = useState(null)
+    const [Categories,SetCategories] = useState([])
     const [DataBook,SetDataBook] = useState(null)
+
 
     async function GetBook() {
       const  DataBook = await BooksService.GetBookById(id);
@@ -23,6 +24,7 @@ export default function ShowInfoBook() {
 
     useEffect(()=>{
       GetBook()
+      BooksService.GetCategories(SetCategories,navigate)
     },[])
 
     function DataBookCallback(DataBook) {
@@ -56,7 +58,6 @@ export default function ShowInfoBook() {
            <AdminNav Navigate={[
             {
               Click: async (e)=> {
-                console.log(DataBook)
                 await BooksService.UpdateBook(DataBook)
                   navigate("/")
               },
@@ -78,7 +79,7 @@ export default function ShowInfoBook() {
               Name: "Узнать номер"
             },
            ]} />
-
+            <Category List={Categories} />
         { Book ? <BookInformation SetNewDataBook = {DataBookCallback}  book= {Book} /> : <p>Загрузка...</p> }
         </div>
         

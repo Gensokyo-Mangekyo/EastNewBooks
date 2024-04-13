@@ -1,15 +1,19 @@
 import axios from 'axios'
 
 
-
 export default class BooksService {
 
     //static host = "https://localhost:44344"
     static host = "http://localhost:5000"
 
-  static async GetBooks(Page) {
+
+  static async GetBooks(Page,Filter) {
     try {
-    const response = await axios.get(BooksService.host + "/GetBooks?page="+Page)
+      let response = null
+      if (Filter)
+      response = await axios.get(BooksService.host + "/CategoryBooks?page="+Page + "&category="+Filter)
+      else
+    response = await axios.get(BooksService.host + "/GetBooks?page="+Page)
     return response.data
 
     } catch(e) {
@@ -63,11 +67,41 @@ export default class BooksService {
       }
   }
 
-  static async LastPage() {
+  static async LastPage(filter) {
     try {
-    const response = await axios.get(BooksService.host + "/GetLastPage") 
+      let response = null
+      if (filter)
+      response = await axios.get(BooksService.host + "/GetLastPage?filter="+filter) 
+    else
+      response = await axios.get(BooksService.host + "/GetLastPage") 
     return response.data
     } catch(e) {
+      console.log(e)
+  }
+}
+
+static async GetCategories(SetCategories,Navigate,SetState) {
+  try {
+    const response = await axios.get(BooksService.host + "/GetCategories") 
+    const Categories = []
+    if (response) {
+    response.data.map(x=> Categories.push( {Id: x.id,Click: ()=> {
+      Navigate("/" + x.name)
+      if (SetState) SetState(x.name)
+    },Name: x.name }))
+    SetCategories(Categories)
+    }
+    else  SetCategories([])
+    } catch(e) {
+      console.log(e)
+  }
+}
+
+static async GetBooksByCategory(Page,Category) {
+  try {
+  const response = await axios.get(BooksService.host + "/CategoryBooks?page="+Page + "&category="+Category)
+  return response.data
+  } catch(e) {
       console.log(e)
   }
 }

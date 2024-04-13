@@ -6,7 +6,7 @@ export default function Pagination({children, ...props}) {
     return (
         <div class="pagination">
   <button class="arrow" onClick={props.prev} >←</button>
-  <input class="page-number" value={children} />
+  <input class="page-number" readOnly={true} value={children} />
   <button class="arrow" onClick={props.next}>→</button>
         </div>
     )

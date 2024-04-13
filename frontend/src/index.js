@@ -13,8 +13,10 @@ root.render(
     <BrowserRouter>
     <Routes>
     <Route path='/' element={<Main></Main>}></Route>
+    <Route path='/:filter' element={<Main></Main>}></Route>
     <Route path='/SearchBooks/:searchParam' element={<SearchQuery></SearchQuery>}></Route>
     <Route path='/Book/:id' element={<ShowInfoBook/>}></Route>
+    <Route path='*' element={<div>Страница не найдена!</div>}></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

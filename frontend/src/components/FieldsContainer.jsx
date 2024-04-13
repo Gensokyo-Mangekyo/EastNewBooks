@@ -71,7 +71,6 @@ export default function FieldsContainer(props) {
                   FieldsValueArray.push(ExtraValue["category"])
                   FieldsValueArray.push(ExtraValue["publisher"])
                   FieldsValueArray.push(ExtraValue["description"])
-                  console.log(FieldsValueArray)
                   handleSetValueFields()
                  } }>{props.TextButton}</Button>
                

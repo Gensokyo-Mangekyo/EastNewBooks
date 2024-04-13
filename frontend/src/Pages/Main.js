@@ -5,8 +5,9 @@ import BooksContainer from "../components/BooksContrainer";
 import FieldsContainer from "../components/FieldsContainer";
 import BooksService from "../API/BooksService";
 import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import Pagination from "../components/UI/Pagination/Pagination";
+import Category from "../components/UI/Category/Category";
 
 export default function Main() {
 
@@ -15,7 +16,10 @@ export default function Main() {
   const [Query,SetQuery] = useState("")
   const [Page,SetPage] = useState(1)
   const [LastPage,SetLastPage] = useState(1)
+  const [Categories,SetCategories] = useState([])
+  const [CategoryFilter,SetCategoryFilter] = useState()
   const navigate = useNavigate();
+  const {filter} = useParams()
 
   const SetValueFieldsCallback = async (value) => { 
     const JsonData = {
@@ -45,7 +49,11 @@ export default function Main() {
     const NewBooks = [...Books]
     NewBooks.push(Result);
     SetBooks(NewBooks)
+    if (JsonData.Category.Name !== undefined)
+    await BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
     SetAdminPanel(null)
+    if (filter)
+    navigate("/")
    }
   }
   const DeleteBook = async(value) => {
@@ -56,22 +64,24 @@ export default function Main() {
    else {
     await GetBooks()
     SetAdminPanel(null)
+    if (filter)
+    navigate("/")
    }
   }
 
   async function GetBooks(NewPage) {
     let Books = null
     if (NewPage)
-    Books = await BooksService.GetBooks(NewPage);
-  else Books = await BooksService.GetBooks(Page);
+    Books = await BooksService.GetBooks(NewPage,filter);
+  else Books = await BooksService.GetBooks(Page,filter);
     if (Books) {
     SetBooks(Books)
     return Books
     }
   }
 
-  async function GetLastPage() {
-    const Last = await BooksService.LastPage();
+  async function GetLastPage(filter) {
+    const Last = await BooksService.LastPage(filter);
     SetLastPage(Last)
   }
 
@@ -80,16 +90,33 @@ export default function Main() {
     await GetBooks(NewPage)
   }
 
+  async function GetBooksByCategory(filter) {
+      const Books = await BooksService.GetBooksByCategory(1,filter)
+      SetBooks(Books)
+      return Books
+      }
+
+
+
   useEffect( ()=> {
-  let IsBooks = GetBooks()
+    let IsBooks = null
+    if (filter) 
+    IsBooks = GetBooksByCategory(filter)
+    else
+  IsBooks = GetBooks()
     if (IsBooks) {
-      GetLastPage()
+      GetLastPage(filter)
+      BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
     }
     else {
     const intervalId = setInterval( async () => {
+      if (filter) 
+      IsBooks = GetBooksByCategory(filter)
+    else
       IsBooks = GetBooks();
       if (IsBooks) {
-      await GetLastPage()
+      await GetLastPage(filter)
+      BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
       clearInterval(intervalId);
       }
     }, 2000);
@@ -98,8 +125,15 @@ export default function Main() {
       clearInterval(intervalId);
     };
   }
-
     },[])
+
+    useEffect(()=> {
+      if (CategoryFilter) {
+        GetBooksByCategory(CategoryFilter)
+        GetLastPage(CategoryFilter)
+      }
+    },[CategoryFilter])
+
   return (
     <div>
            <Nav Navigate = {[{
@@ -158,6 +192,8 @@ export default function Main() {
         Name: "Удалить книгу"
        },
      ]} ></AdminNav>}
+
+     <Category List={Categories} />
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {
@@ -173,8 +209,10 @@ export default function Main() {
           const searchUrl = `/SearchBooks/` + Query;
          navigate(searchUrl)
      }} />
-    
-    <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} />
+
+  {filter !== undefined ? <BooksContainer Default="Доступных книг в продаже нет!" Name ={"Категория: " + filter} Books = {Books} /> : 
+  <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} /> }  
+
      <Pagination prev={ async (e)=>{ if (Page-1 === 0) 
      await SetNewPage(LastPage);
       else await  SetNewPage(Page-1)}} next={ async (e)=>{

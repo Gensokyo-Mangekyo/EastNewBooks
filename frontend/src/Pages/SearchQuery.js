@@ -1,18 +1,21 @@
-import { useParams} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import BooksService from "../API/BooksService";
 import Nav from "../components/UI/Nav/Nav";
 import BooksContainer from "../components/BooksContrainer";
 import Pagination from "../components/UI/Pagination/Pagination";
 import Search from "../components/UI/Search/Search";
+import Category from "../components/UI/Category/Category";
 
 export default function SearchQuery() {
+    const navigate = useNavigate();
     const  { searchParam } = useParams() 
     const  [ search,setSearch ] = useState("")
     const [Books,SetBooks] = useState([])
     const [Query,SetQuery] = useState("")
     const [Page,SetPage] = useState(1)
     const [LastPage,SetLastPage] = useState(1)
+    const [Categories,SetCategories] = useState([])
 
     async function SearchBooks(Query,page) {
         let Response = null;
@@ -35,6 +38,7 @@ export default function SearchQuery() {
 
     useEffect( ()=> {
         SearchBooks()
+        BooksService.GetCategories(SetCategories,navigate)
          },[])
     return (
         <div>
@@ -45,6 +49,7 @@ export default function SearchQuery() {
            {Link: "/",Name: "Контакты"},
            {Link: "/",Name: "Личный кабинет"},
            ]} />
+            <Category List={Categories} />
             <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  
