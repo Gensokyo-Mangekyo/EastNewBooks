@@ -47,7 +47,7 @@ export default function SearchQuery() {
            {Link: "/",Name: "Корзина" }, 
            {Link: "/",Name: "Оформить заказ"},
            {Link: "/",Name: "Контакты"},
-           {Link: "/",Name: "Личный кабинет"},
+           {Link: "/Auth",Name: "Личный кабинет"},
            ]} />
             <Category List={Categories} />
             <Search Change = {(e)=> {

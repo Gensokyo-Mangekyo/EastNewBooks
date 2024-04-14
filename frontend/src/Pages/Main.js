@@ -36,7 +36,9 @@ export default function Main() {
       },
       Description: value[7]
     }
-
+    if (JsonData.Category.Name === "") JsonData.Category.Name = undefined
+    if (JsonData.Publisher.Name  === "") JsonData.Publisher.Name = undefined
+    if (JsonData.Description === "") JsonData.Description = undefined
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
@@ -49,7 +51,7 @@ export default function Main() {
     const NewBooks = [...Books]
     NewBooks.push(Result);
     SetBooks(NewBooks)
-    if (JsonData.Category.Name !== undefined)
+    if (JsonData.Category.Name)
     await BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
     SetAdminPanel(null)
     if (filter)
@@ -153,7 +155,7 @@ export default function Main() {
       Name: "Контакты"
      },
      {
-      Link: "/",
+      Link: "/Auth",
       Name: "Личный кабинет"
      },
      ]} />
@@ -212,7 +214,6 @@ export default function Main() {
 
   {filter !== undefined ? <BooksContainer Default="Доступных книг в продаже нет!" Name ={"Категория: " + filter} Books = {Books} /> : 
   <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} /> }  
-
      <Pagination prev={ async (e)=>{ if (Page-1 === 0) 
      await SetNewPage(LastPage);
       else await  SetNewPage(Page-1)}} next={ async (e)=>{

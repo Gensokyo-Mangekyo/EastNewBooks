@@ -76,6 +76,47 @@ body {
   margin-bottom: 10px;
 }
 
+.AuthContainer {
+	background-color: #fff;
+	border-radius: 3px;
+	padding: 15px 24px;
+	margin: 0 auto;
+  margin-left: 35%;
+   margin-right: 35%;
+	max-width: 30%; 
+	margin-bottom: 24px;
+  margin-top: 22px;
+  }
+
+  .AuthField {
+    max-width: 70%;
+    margin-bottom: 25px;
+  }
+
+  .AuthButton {
+    max-width: 30%;
+    max-height: 50%;
+    margin-bottom: 15px;
+  }
+
+  .AuthContainer img {
+    max-width: 32px;
+    max-height: 32px;
+    min-height: 25px;
+    float: right;
+    margin-right: 20%;
+    margin-top: 45px;
+    cursor: pointer;
+  }
+
+  .RememberMe {
+    font-size: 18px;
+    font-weight: bold;
+    color: gray;
+    padding: 2px 0px;
+  }
+  
+
 
 
 

@@ -52,7 +52,7 @@ export default function ShowInfoBook() {
            {Link: "/",Name: "Корзина" }, 
            {Link: "/",Name: "Оформить заказ"},
            {Link: "/",Name: "Контакты"},
-           {Link: "/",Name: "Личный кабинет"},
+           {Link: "/Auth",Name: "Личный кабинет"},
            ]} />
 
            <AdminNav Navigate={[
