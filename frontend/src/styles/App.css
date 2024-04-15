@@ -116,7 +116,11 @@ body {
     padding: 2px 0px;
   }
   
-
+  .AuthError {
+    color: red;
+    margin-top: 10px;
+    
+  }
 
 
 
