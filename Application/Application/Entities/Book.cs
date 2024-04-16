@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
+#nullable enable
 namespace Application.Entities
 {
     public class Book: ICloneable
@@ -13,11 +11,11 @@ namespace Application.Entities
         public string Name { get; set; }
         public int Pages { get; set; }
         public decimal Price { get; set; }
-        public Category Category { get; set; } 
-        public Publisher Publisher { get; set; } 
-        public string Description { get; set; }
-        public int CategoryId { get; set; }
-        public int PublisherId { get; set; }
+        public Category? Category { get; set; } 
+        public Publisher? Publisher { get; set; } 
+        public string? Description { get; set; } = null;
+        public int? CategoryId { get; set; } = null;
+        public int? PublisherId { get; set; } = null;
 
         public Book(int id, string url, int year, string name, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
         {

@@ -9,7 +9,7 @@ namespace Application.Controllers
 {
     public class BooksController : Controller
     {
-        readonly int Limit = 2;
+        readonly int Limit = 8;
 
         [HttpPost]
         [Route("/AddBook")]
@@ -70,9 +70,15 @@ namespace Application.Controllers
 
         [HttpGet]
         [Route("/GetLastPage")]
-        public int GetBooks([FromServices] ApplicationContext applicationContext)
+        public int GetBooks(string filter,[FromServices] ApplicationContext applicationContext)
         {
+            if (string.IsNullOrEmpty(filter))
             return GetLastPage(applicationContext.Books);
+            else
+            {
+                var Books = applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == filter).AsEnumerable();
+                return GetLastPage(Books);
+            }
         }
 
         [HttpGet]
@@ -80,6 +86,13 @@ namespace Application.Controllers
         public IActionResult GetBooks(int page, [FromServices] ApplicationContext applicationContext)
         {
             return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
+        }
+
+        [HttpGet]
+        [Route("/CategoryBooks")]
+        public IActionResult CategoryBooks(string category, int page, [FromServices] ApplicationContext applicationContext)
+        {
+            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == category).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
         }
 
 
@@ -101,10 +114,6 @@ namespace Application.Controllers
             {
                 Take = Take - searchBooks.Count();
                 Books = searchBooks.TakeLast(Take).ToList();
-                foreach (var item in Books)
-                {
-                    Console.WriteLine(item.Name);
-                }
             }
             return new JsonResult(new { 
             Last = LastPage,
@@ -120,32 +129,46 @@ namespace Application.Controllers
             var Book = applicationContext.Books.Where(item => item.Id == id).First();
             var Publisher = applicationContext.Publishers.Where(x => x.Id == Book.PublisherId).FirstOrDefault();
             var Category = applicationContext.Categories.Where(x => x.Id == Book.CategoryId).FirstOrDefault();
-            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year,Book.Url, Publisher = Publisher.Name, Category = Category.Name, Book.Description });
+            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year,Book.Url, Publisher = Publisher?.Name, Category = Category?.Name, Book?.Description });
         }
 
         [HttpPost]
         [Route("/DeleteBook")]
-        public IActionResult DeleteBookById(int id, [FromServices] ApplicationContext applicationContext)
+        public IActionResult DeleteBookById(string id, [FromServices] ApplicationContext applicationContext)
         {
-            if (id < 0)
-                return BadRequest();
-
-            var Element = applicationContext.Books.Where(x => x.Id == id).FirstOrDefault();
-
-            if (Element != null)
+            int Id = 0;
+            if (int.TryParse(id, out Id)) //Attepmt convert to int
             {
-                applicationContext.Books.Remove(Element);
-                applicationContext.SaveChanges();
-                return Ok();
+                if (Id < 0)
+                    return BadRequest();
+                var Element = applicationContext.Books.Where(x => x.Id == Id).FirstOrDefault();
+
+                if (Element != null)
+                {
+                    applicationContext.Books.Remove(Element);
+                    applicationContext.SaveChanges();
+                    return Ok();
+                }
             }
-           return BadRequest();
+            else //This is name book
+            {
+                var Element = applicationContext.Books.Where(x => x.Name == id).FirstOrDefault();
+                if (Element != null)
+                {
+                    applicationContext.Books.Remove(Element);
+                    applicationContext.SaveChanges();
+                    return Ok();
+                }
+            }
+
+            return BadRequest();
+
         }
 
         [HttpPost]
         [Route("/UpdateBook")]
         public IActionResult UpdateBook([FromBody] Book book, [FromServices] ApplicationContext applicationContext)
         {
-
             if (book.Category != null)
             {
                 var Category = applicationContext.Categories.Where(x => x.Name == book.Category.Name).FirstOrDefault();
@@ -171,7 +194,13 @@ namespace Application.Controllers
             applicationContext.Books.Update(book);
             applicationContext.SaveChanges();
             return Ok();
+        }
 
+        [HttpGet]
+        [Route("/GetCategories")]
+        public IActionResult GetCategories([FromServices] ApplicationContext applicationContext)
+        {
+            return new JsonResult(applicationContext.Categories.ToList());
         }
 
     }
