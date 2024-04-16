@@ -28,17 +28,13 @@ export default function Main() {
       Pages: value[2],
       Year: value[3],
       Url: value[4],
-      Category: {
-        Name: value[5],
-      },
-      Publisher: {
-        Name: value[6],
-      },
-      Description: value[7]
+      Category: null,
+      Publisher: null,
+      Description: null
     }
-    if (JsonData.Category.Name === "") JsonData.Category.Name = undefined
-    if (JsonData.Publisher.Name  === "") JsonData.Publisher.Name = undefined
-    if (JsonData.Description === "") JsonData.Description = undefined
+    if (value[5]) JsonData.Category  = {Name: value[5] }
+    if (value[6]) JsonData.Publisher  = {Name: value[6] }
+    if (value[7]) JsonData.Description  = value[7]
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
@@ -51,7 +47,7 @@ export default function Main() {
     const NewBooks = [...Books]
     NewBooks.push(Result);
     SetBooks(NewBooks)
-    if (JsonData.Category.Name)
+    if (JsonData.Category)
     await BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
     SetAdminPanel(null)
     if (filter)
@@ -186,7 +182,7 @@ export default function Main() {
         Name: "Добавить книгу"
        },
        {
-        Click: (e) => { SetAdminPanel(<FieldsContainer SetValueFields = {DeleteBook}  Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор", Attributes: {
+        Click: (e) => { SetAdminPanel(<FieldsContainer SetValueFields = {DeleteBook}  Cancel = {(e) => {SetAdminPanel(null)}}  TextButton = "Удалить книгу"  Name="Удаление книги" Fields = {[ {Name: "Идентификатор или наименование", Attributes: {
           maxLength: 100
         },
        },]} /> ) 

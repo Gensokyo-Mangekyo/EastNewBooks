@@ -69,7 +69,7 @@ export default function BookInformation(props) {
 		else UndefinedValue[Key] = ChangingValue[Key].Value !== null ? <p onDoubleClick={() => {SetInput(Key,true)}} >{text !== null ? text + ": " + ChangingValue[Key].Value : ChangingValue[Key].Value  }</p> : <p onDoubleClick={() => {SetInput(Key,true)}} >{defaultText}</p>
 	}
 
-	UndefinedValueChange("category","Категория","Категория: Отсуствует",30)
+	UndefinedValueChange("category","Категория","Категория: Отсуствует",25)
 	UndefinedValueChange("publisher","Издатель","Издатель: Неизвестен",30)
 	UndefinedValueChange("description",null,"Описание книги отсуствует",255)
 
