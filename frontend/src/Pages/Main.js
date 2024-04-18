@@ -191,7 +191,10 @@ export default function Main() {
        },
      ]} ></AdminNav>}
 
-     <Category List={Categories} />
+     <Category Remove={async (Id)=> {
+      await BooksService.RemoveCategory(Id)
+      BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
+     }} List={Categories} />
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {

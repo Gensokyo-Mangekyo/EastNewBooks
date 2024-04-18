@@ -18,5 +18,24 @@ namespace Application.Controllers
             }
             return PhysicalFile(filePath, "text/html");
         }
+
+        [HttpPost]
+        [Route("/RemoveCategory")]
+        public IActionResult RemoveCategory(int id, [FromServices] ApplicationContext applicationContext)
+        {
+            var Category = applicationContext.Categories.Where(x => x.Id == id).FirstOrDefault();
+            if (Category != null)
+            {
+                foreach (var item in applicationContext.Books.Where(x=> x.Category.Id == Category.Id)) //(Cascade Delete On) -  Remove Category from Books else they will delete.
+                {
+                    item.Category = null;
+                    item.CategoryId = null;
+                    applicationContext.Books.Update(item);
+                }
+                applicationContext.Remove(Category);
+                applicationContext.SaveChanges();
+            }
+            return new JsonResult(applicationContext.Categories.ToList());
+        }
     }
 }

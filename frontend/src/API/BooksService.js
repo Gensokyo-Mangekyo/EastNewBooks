@@ -3,9 +3,7 @@ import axios from 'axios'
 
 export default class BooksService {
 
-    //static host = "https://localhost:44344"
     static host = "http://localhost:5000"
-
 
   static async GetBooks(Page,Filter) {
     try {
@@ -94,6 +92,15 @@ static async GetCategories(SetCategories,Navigate,SetState) {
     else  SetCategories([])
     } catch(e) {
       console.log(e)
+  }
+}
+
+static async RemoveCategory(id) {
+  try {
+      const response = await axios.post(BooksService.host + "/RemoveCategory?id= " + id)
+      return response.data
+      } catch(e) {
+          console.log(e)
   }
 }
 
