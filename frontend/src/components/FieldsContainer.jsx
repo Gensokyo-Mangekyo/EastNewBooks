@@ -50,7 +50,7 @@ export default function FieldsContainer(props) {
                 <FieldsModal visible={Modal} setVisible={SetModal}>
                 <LabelText >Категория</LabelText> <InputValue maxLength={25} onChange={(e)=> {ChangeExtraValue("category",e.target.value)}}/>
                 <LabelText>Издатель</LabelText> <InputValue maxLength={30} onChange={(e)=> {ChangeExtraValue("publisher",e.target.value)}}  /> 
-                <LabelText>Описание</LabelText> <TextArea maxLength={255}  onChange={(e)=> { ChangeExtraValue("description",e.target.value)}} />
+                <LabelText>Описание</LabelText> <TextArea maxLength={500}  onChange={(e)=> { ChangeExtraValue("description",e.target.value)}} />
                  <StyleButton onClick = {(e)=> {SetModal(false); }}>Подтвердить</StyleButton>
                 </FieldsModal>
                  <div className="ModalButtonContainer" ><Button onClick={()=> {

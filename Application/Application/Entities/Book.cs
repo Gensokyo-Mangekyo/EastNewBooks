@@ -10,6 +10,7 @@ namespace Application.Entities
         public int Year { get; set; }
         public string Name { get; set; }
         public int Pages { get; set; }
+        public string Author { get; set; }
         public decimal Price { get; set; }
         public Category? Category { get; set; } 
         public Publisher? Publisher { get; set; } 
@@ -17,12 +18,13 @@ namespace Application.Entities
         public int? CategoryId { get; set; } = null;
         public int? PublisherId { get; set; } = null;
 
-        public Book(int id, string url, int year, string name, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
+        public Book(int id, string url, int year, string name, string author, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
         {
             Id = id;
             Url = url;
             Year = year;
             Name = name;
+            Author = author;
             Pages = pages;
             Price = price;
             Category = category;
@@ -37,12 +39,12 @@ namespace Application.Entities
 
         public override string ToString()
         {
-            return $"{Id} { Url} {Year} {Name} {Pages} {Price} {Category?.Name} {Publisher?.Name} {Description}";
+            return $"{Id} { Url} {Year} {Name} {Pages} {Author} {Price} {Category?.Name} {Publisher?.Name} {Description}";
         }
 
         public object Clone()
         {
-            return new Book(Id,Url,Year,Name,Pages,Price,Category,Publisher,Description);
+            return new Book(Id,Url,Year,Name,Author,Pages,Price,Category,Publisher,Description);
         }
     }
 }

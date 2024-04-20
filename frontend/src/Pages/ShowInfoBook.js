@@ -36,11 +36,17 @@ export default function ShowInfoBook() {
         Price: DataBook.price.Value,
         Url: Book.url,
         Year: DataBook.year.Value,
-        Publisher: { Name:  DataBook.publisher.Value},
-        Category: { Name: DataBook.category.Value },
+        Author: DataBook.author.Value,
+        Publisher: null,
+        Category: null,
         Description: DataBook.description.Value
       }
 
+      if (DataBook.publisher.Value)
+      NewDataBook["Publisher"] = {Name: DataBook.publisher.Value}
+      if (DataBook.category.Value)
+      NewDataBook["Category"] = {Name: DataBook.category.Value}
+      
       SetDataBook(NewDataBook)
     }
 

@@ -129,7 +129,7 @@ namespace Application.Controllers
             var Book = applicationContext.Books.Where(item => item.Id == id).First();
             var Publisher = applicationContext.Publishers.Where(x => x.Id == Book.PublisherId).FirstOrDefault();
             var Category = applicationContext.Categories.Where(x => x.Id == Book.CategoryId).FirstOrDefault();
-            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year,Book.Url, Publisher = Publisher?.Name, Category = Category?.Name, Book?.Description });
+            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year, Book.Author,Book.Url, Publisher = Publisher?.Name, Category = Category?.Name, Book?.Description });
         }
 
         [HttpPost]

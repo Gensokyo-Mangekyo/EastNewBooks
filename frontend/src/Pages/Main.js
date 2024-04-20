@@ -27,14 +27,15 @@ export default function Main() {
       Price: value[1],
       Pages: value[2],
       Year: value[3],
-      Url: value[4],
+      Author: value[4],
+      Url: value[5],
       Category: null,
       Publisher: null,
       Description: null
     }
-    if (value[5]) JsonData.Category  = {Name: value[5] }
-    if (value[6]) JsonData.Publisher  = {Name: value[6] }
-    if (value[7]) JsonData.Description  = value[7]
+    if (value[6]) JsonData.Category  = {Name: value[6] }
+    if (value[7]) JsonData.Publisher  = {Name: value[7] }
+    if (value[8]) JsonData.Description  = value[8]
    const Result = await BooksService.AddBook(JsonData)
    if (Result === undefined)
    {
@@ -176,6 +177,9 @@ export default function Main() {
             maxLength: 4
           },
           },
+          {Name: "Автор", Attributes: {
+            maxLength: 25
+          },},
           {Name: "Изображение", Type: "DropImage"}
      ]} TextButton = "Добавить новую книгу"  > </FieldsContainer>)
         },

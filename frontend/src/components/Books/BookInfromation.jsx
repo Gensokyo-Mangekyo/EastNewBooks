@@ -12,6 +12,7 @@ export default function BookInformation(props) {
 		category: {Changing: false, Value: props.book.category },
 		publisher:{Changing: false, Value: props.book.publisher },
 		year: {Changing: false, Value: props.book.year },
+		author: {Changing: false, Value: props.book.author },
 		pages: {Changing: false, Value: props.book.pages },
 		description: {Changing: false, Value: props.book.description }
 	})
@@ -71,7 +72,7 @@ export default function BookInformation(props) {
 
 	UndefinedValueChange("category","Категория","Категория: Отсуствует",25)
 	UndefinedValueChange("publisher","Издатель","Издатель: Неизвестен",30)
-	UndefinedValueChange("description",null,"Описание книги отсуствует",255)
+	UndefinedValueChange("description",null,"Описание книги отсуствует",500)
 
 	
 
@@ -88,14 +89,16 @@ export default function BookInformation(props) {
               </div>
               <div className="RightPart">
 		    <div className="HeaderBook">
-		       { ChangingValue["name"].Changing === false ? <h1 onDoubleClick={()=>{SetInput("name",true)}}>{ChangingValue["name"].Value}</h1> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"name")}} onBlur={(e)=> {SetInput("name",false)}} maxLength={100} defaultValue={ChangingValue["name"].Value} onChange= {(e)=>{Value(e,"name")}} />  }
+		       { ChangingValue["name"].Changing === false ? <h1 onDoubleClick={()=>{SetInput("name",true)}}>
+				{ChangingValue["name"].Value}</h1> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"name")}} onBlur={(e)=> {SetInput("name",false)}} maxLength={100} defaultValue={ChangingValue["name"].Value} onChange= {(e)=>{Value(e,"name")}} />  }
 		        <hr/>
 		    </div>
 		    <div className="Info">
 		     	{UndefinedValue["category"]} 
 				 {UndefinedValue["publisher"]} 
 		        { ChangingValue["pages"].Changing === false ?  <p onDoubleClick={() => {SetInput("pages",true)}} >Количество страниц: {ChangingValue["pages"].Value}</p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"pages")}} onBlur={(e)=> {SetInput("pages",false)}} maxLength={4} defaultValue={ChangingValue["pages"].Value} onChange= {(e)=>{NumberValue(e,"pages")}} /> }
-		       { ChangingValue["year"].Changing === false ? <p onDoubleClick={() => {SetInput("year",true)}}>Год выпуска: {props.book.year} </p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"year")}} onBlur={(e)=> {SetInput("year",false)}} maxLength={4} defaultValue={ChangingValue["year"].Value} onChange= {(e)=>{NumberValue(e,"year")}} /> }
+		       { ChangingValue["year"].Changing === false ? <p onDoubleClick={() => {SetInput("year",true)}}>Год выпуска: {ChangingValue["year"].Value} </p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"year")}} onBlur={(e)=> {SetInput("year",false)}} maxLength={4} defaultValue={ChangingValue["year"].Value} onChange= {(e)=>{NumberValue(e,"year")}} /> }
+			   { ChangingValue["author"].Changing === false ?  <p onDoubleClick={() => {SetInput("author",true)}} >Автор: {ChangingValue["author"].Value}</p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"author")}} onBlur={(e)=> {SetInput("author",false)}} maxLength={25} defaultValue={ChangingValue["author"].Value} onChange= {(e)=>{Value(e,"author")}} /> }
 		        <hr/>
 		        <div className ="description">
 		        {UndefinedValue["description"]}
