@@ -1,7 +1,9 @@
 import BucketButton from "../UI/button/BucketButton"
 import BooksService from "../../API/BooksService"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import InputValue from "../UI/input/InputValue"
+import UsersService from "../../API/UsersService"
+import GlobalService from "../../API/GlobalService"
 import "./Books.css"
 
 export default function BookInformation(props) {
@@ -17,13 +19,17 @@ export default function BookInformation(props) {
 		description: {Changing: false, Value: props.book.description }
 	})
 
-	function SetInput(Key,Value) {
+	async function SetInput(Key,Value) {
+		const Data = GlobalService.GetLoginAndPassword()
+		const Role = await  UsersService.GetRole(Data["Login"],Data["Password"])
+		if (Role === "Продавец" || Role === "Администратор" || Role === "Менеджер") {
 		const updatedValue = { ...ChangingValue }
 		updatedValue[Key].Changing = Value
 		SetChangingValue(updatedValue)
 		if (Value === false) {
 			props.SetNewDataBook(updatedValue)
 		}
+	}
 	}
 
 	function NumberValue(e,key) {

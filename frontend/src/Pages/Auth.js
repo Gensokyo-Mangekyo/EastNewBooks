@@ -25,10 +25,12 @@ export default function Auth() {
     const navigate = useNavigate();
 
     useEffect(()=>{
+      if (sessionStorage.getItem("UserLogin") && sessionStorage.getItem("UserPassword"))
+      navigate('/UserCabinet')
       const login = getCookie("UserLogin")
       const password = getCookie("UserPassword")
-      if (login !== "" && password != "")
-         navigate("/") 
+      if (login !== "" && password !== "")
+         navigate("/UserCabinet") 
     },[])
 
     async function SetValueFieldsCallback(value) {

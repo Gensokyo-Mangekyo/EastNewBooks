@@ -8,6 +8,8 @@ import { useState,useEffect } from "react";
 import { useNavigate,useParams } from "react-router-dom";
 import Pagination from "../components/UI/Pagination/Pagination";
 import Category from "../components/UI/Category/Category";
+import UsersService from "../API/UsersService";
+import GlobalService from "../API/GlobalService";
 
 export default function Main() {
 
@@ -18,6 +20,7 @@ export default function Main() {
   const [LastPage,SetLastPage] = useState(1)
   const [Categories,SetCategories] = useState([])
   const [CategoryFilter,SetCategoryFilter] = useState()
+  const [RemoveFuncCategory,SetRemoveFuncCategory] = useState()
   const navigate = useNavigate();
   const {filter} = useParams()
 
@@ -95,8 +98,6 @@ export default function Main() {
       return Books
       }
 
-
-
   useEffect( ()=> {
     let IsBooks = null
     if (filter) 
@@ -119,18 +120,31 @@ export default function Main() {
       clearInterval(intervalId);
       }
     }, 2000);
-
     return () => {
       clearInterval(intervalId);
     };
   }
     },[])
 
+    async function LADNO(login,password) {
+      const Role = await UsersService.GetRole(login,password)
+          if (Role === "Менеджер" || Role === "Администратор" )
+          {
+            SetRemoveFuncCategory(async (Id)=> {
+              await BooksService.RemoveCategory(Id)
+              BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
+            })
+          }
+  }
+
     useEffect(()=> {
       if (CategoryFilter) {
         GetBooksByCategory(CategoryFilter)
         GetLastPage(CategoryFilter)
       }
+      const Data = GlobalService.GetLoginAndPassword()
+      LADNO(Data["Login"],Data["Password"])
+
     },[CategoryFilter])
 
   return (
@@ -195,10 +209,7 @@ export default function Main() {
        },
      ]} ></AdminNav>}
 
-     <Category Remove={async (Id)=> {
-      await BooksService.RemoveCategory(Id)
-      BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
-     }} List={Categories} />
+     <Category Remove={RemoveFuncCategory} List={Categories} />
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {

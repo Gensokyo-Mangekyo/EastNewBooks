@@ -5,15 +5,10 @@ import InputValue from "./UI/input/InputValue"
 import OpenEye from "../images/OpenEye.png"
 import CloseEye from "../images/ClosedEye.png"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import UsersService from "../API/UsersService";
+import GlobalService from "../API/GlobalService"
 
-
-function setCookie(cookieName, cookieValue, expirationDays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
-  var expires = "expires=" + d.toUTCString();
-  document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-}
 
 export default function AuthContainer(props) {
  const [PasswordBox,SetPasswordBox] = useState({
@@ -24,6 +19,7 @@ export default function AuthContainer(props) {
   const [Password,SetPassword] = useState("")
   const [Error,SetError] = useState(false)
   const [Cookie,SetCookie] = useState(false)
+  const navigate = useNavigate()
         return(
             <div className="AuthContainer">
                   <h1>Авторизация</h1>
@@ -41,24 +37,31 @@ export default function AuthContainer(props) {
                 </div>
                 <div className="AuthButton" >
                  <Button onClick = {async ()=> {
-                  setCookie("UserLogin",Login,-1)
-                  setCookie("UserPassword",Password,-1)
+                 GlobalService.setCookie("UserLogin",Login,-1)
+                  GlobalService.setCookie("UserPassword",Password,-1)
                            const StatusCode = await UsersService.IsExistUser(Login,Password)
                            if (StatusCode === 200) {
-                           SetError(false)
                            if (Cookie) {
-                           setCookie("UserLogin",Login,30)
-                           setCookie("UserPassword",Password,30)
+                           GlobalService.setCookie("UserLogin",Login,30)
+                           GlobalService.setCookie("UserPassword",Password,30)
                            }
+                           else {
+                            sessionStorage.setItem("UserLogin",Login)
+                            sessionStorage.setItem("UserPassword",Password)
+                           }
+                           const Url = await UsersService.GetUrl(Login,Password)
+                           navigate(Url)
                            }
                        else SetError(true)
                  }}>Авторизоваться</Button>
                  </div>
                  <div className="RememberMe" ><input onChange={(e)=> {
-                    SetCookie(e.target.checked)
+                    GlobalService.SetCookie(e.target.checked)
                  }} type="checkbox" /> <span>Запомнить меня</span> </div>
                     <div className="AuthButton" >
-                    <LabelRef>Регистрация</LabelRef>
+                    <LabelRef onClick={()=> {
+                      navigate("/reg")
+                    }} >Регистрация</LabelRef>
                     </div>
                 
             </div>
