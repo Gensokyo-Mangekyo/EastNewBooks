@@ -6,6 +6,7 @@ import BooksContainer from "../components/BooksContrainer";
 import Pagination from "../components/UI/Pagination/Pagination";
 import Search from "../components/UI/Search/Search";
 import Category from "../components/UI/Category/Category";
+import GlobalService from "../API/GlobalService";
 
 export default function SearchQuery() {
     const navigate = useNavigate();
@@ -42,13 +43,7 @@ export default function SearchQuery() {
          },[])
     return (
         <div>
-        <Nav Navigate = {[{
-            Link: "/",Name: "Главная" },
-           {Link: "/",Name: "Корзина" }, 
-           {Link: "/",Name: "Оформить заказ"},
-           {Link: "/",Name: "Контакты"},
-           {Link: "/Auth",Name: "Личный кабинет"},
-           ]} />
+        <Nav Navigate = {GlobalService.Navigation} />
             <Category List={Categories} />
             <Search Change = {(e)=> {
       SetQuery(e.target.value)

@@ -1,0 +1,46 @@
+.HeaderImg {
+    padding-left: 3%;
+    float: left;
+    max-width: 20%;
+}
+
+.Contacts {
+    margin-top: 15px;
+    padding-right: 3%;
+    float: right;
+    max-width: 20%;
+}
+
+.HeaderImg  img {
+    max-height: 150px;
+}
+
+.Trubka {
+    max-width: 32px;
+    max-height: 32px;
+    margin-right: 20px;
+    margin-top: -5px;
+    float: left;
+}
+
+.Contacts p {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 35px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1350px) {
+    img {
+        max-width: 90%; /* При разрешении до 600px, уменьшаем максимальную ширину до 80% */
+    }
+    .Contacts p {
+        font-size: 15px;
+    }
+    .Contacts div {
+        margin-left: 65px;
+        margin-bottom: 35px;
+    }
+}
+
+

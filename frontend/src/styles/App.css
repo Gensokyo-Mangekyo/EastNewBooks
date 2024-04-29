@@ -33,6 +33,7 @@ body {
   background: #fff;
   margin: 0 auto;
   padding: 25px;
+  margin-top: 25px;
   border-radius: 3px;
   max-width: 35%;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);

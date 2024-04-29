@@ -1,6 +1,30 @@
 
 
 export default class GlobalService {
+
+    static Navigation = [
+      {
+        Link: "/",
+        Name: "Главная"
+       },
+       {
+        Link: "/",
+        Name: "Корзина"
+       },
+       {
+        Link: "/",
+        Name: "Оформить заказ"
+       },
+       {
+        Link: "/Publishers",
+        Name: "Издатели"
+       },
+       {
+        Link: "/Auth",
+        Name: "Личный кабинет"
+       },
+    ]
+
     static setCookie(cookieName, cookieValue, expirationDays) {
         var d = new Date();
         d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
@@ -30,5 +54,5 @@ export default class GlobalService {
         password = GlobalService.getCookie("UserPassword")
         return {Login: login, Password: password}
       }
-    
+
 }

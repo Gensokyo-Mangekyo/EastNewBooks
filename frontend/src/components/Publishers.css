@@ -1,0 +1,32 @@
+
+.PublishersMain {
+    background-color: #fff;
+	border-radius: 16px;
+	padding: 2px 24px;
+	margin: 0 auto;
+	max-width: 40%; 
+	margin-bottom: 24px;
+    margin-top: 22px;
+}
+
+.PublisherItem {
+    margin-top: 10px;
+	background-color: #f9f9f9;
+    border-radius: 10px;
+    max-width: 95%;
+    padding-top: 15px;
+    padding-left: 20px;
+  }
+
+.Header {
+    font-size: 35px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.Description {
+    font-size: 25px;
+    padding-bottom: 20px;
+}
+ 
+

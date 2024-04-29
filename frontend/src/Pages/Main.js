@@ -10,6 +10,7 @@ import Pagination from "../components/UI/Pagination/Pagination";
 import Category from "../components/UI/Category/Category";
 import UsersService from "../API/UsersService";
 import GlobalService from "../API/GlobalService";
+import Header from "../components/UI/Header/Header";
 
 export default function Main() {
 
@@ -149,27 +150,8 @@ export default function Main() {
 
   return (
     <div>
-           <Nav Navigate = {[{
-      Link: "/",
-      Name: "Главная"
-     },
-     {
-      Link: "/",
-      Name: "Корзина"
-     },
-     {
-      Link: "/",
-      Name: "Оформить заказ"
-     },
-     {
-      Link: "/",
-      Name: "Контакты"
-     },
-     {
-      Link: "/Auth",
-      Name: "Личный кабинет"
-     },
-     ]} />
+        <Header/>
+           <Nav Navigate = {GlobalService.Navigation} />
           
     {AdminPanel !== null ? AdminPanel :    <AdminNav Navigate = {[
       {
@@ -209,7 +191,7 @@ export default function Main() {
        },
      ]} ></AdminNav>}
 
-     <Category Remove={RemoveFuncCategory} List={Categories} />
+
      <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  Click={async (e)=> {
@@ -225,7 +207,7 @@ export default function Main() {
           const searchUrl = `/SearchBooks/` + Query;
          navigate(searchUrl)
      }} />
-
+     <Category Remove={RemoveFuncCategory} List={Categories} />
   {filter !== undefined ? <BooksContainer Default="Доступных книг в продаже нет!" Name ={"Категория: " + filter} Books = {Books} /> : 
   <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} /> }  
      <Pagination prev={ async (e)=>{ if (Page-1 === 0) 

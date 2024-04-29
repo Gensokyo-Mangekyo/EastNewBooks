@@ -5,6 +5,7 @@ import AuthContainer from "../components/AuthConatainer";
 import FieldsContainer from "../components/FieldsContainer";
 import UsersService from "../API/UsersService";
 import { useNavigate } from "react-router-dom";
+import GlobalService from "../API/GlobalService";
 
 function getCookie(cookieName) {
     var name = cookieName + "=";
@@ -58,27 +59,7 @@ export default function Auth() {
       }
 
     return(<div>
-         <Nav Navigate = {[{
-      Link: "/",
-      Name: "Главная"
-     },
-     {
-      Link: "/",
-      Name: "Корзина"
-     },
-     {
-      Link: "/",
-      Name: "Оформить заказ"
-     },
-     {
-      Link: "/",
-      Name: "Контакты"
-     },
-     {
-      Link: "/Auth",
-      Name: "Личный кабинет"
-     },
-     ]} />
+         <Nav Navigate = {GlobalService.Navigation} />
       { UserPanel === true ? <FieldsContainer SetValueFields = {SetValueFieldsCallback} Cancel = {(e) => {SetUserPanel(false)  }} TextButton = "Создать"  Name="Создание пользователя" Fields = {[
         {Name: "Имя", Attributes: {
             maxLength: 20

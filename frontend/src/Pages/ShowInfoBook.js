@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AdminNav from "../components/UI/Nav/AdminNav";
 import Category from "../components/UI/Category/Category";
 import BookInformation from "../components/Books/BookInfromation";
+import GlobalService from "../API/GlobalService";
 
 
 export default function ShowInfoBook() {
@@ -53,13 +54,7 @@ export default function ShowInfoBook() {
       return(
 
         <div>
-             <Nav Navigate = {[{
-            Link: "/",Name: "Главная" },
-           {Link: "/",Name: "Корзина" }, 
-           {Link: "/",Name: "Оформить заказ"},
-           {Link: "/",Name: "Контакты"},
-           {Link: "/Auth",Name: "Личный кабинет"},
-           ]} />
+             <Nav Navigate = {GlobalService.Navigation} />
 
            <AdminNav Navigate={[
             {

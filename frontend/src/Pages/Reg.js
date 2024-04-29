@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Nav from "../components/UI/Nav/Nav";
 import RegContainer from "../components/RegConatainer";
 import { useNavigate } from "react-router-dom";
+import GlobalService from "../API/GlobalService";
 
 
 function getCookie(cookieName) {
@@ -31,27 +32,7 @@ export default function Reg() {
       },[])
 
     return (<div>
-         <Nav Navigate = {[{
-      Link: "/",
-      Name: "Главная"
-     },
-     {
-      Link: "/",
-      Name: "Корзина"
-     },
-     {
-      Link: "/",
-      Name: "Оформить заказ"
-     },
-     {
-      Link: "/",
-      Name: "Контакты"
-     },
-     {
-      Link: "/Auth",
-      Name: "Личный кабинет"
-     },
-     ]} />
+         <Nav Navigate = {GlobalService.Navigation} />
      <RegContainer/>
     </div>)
 }
