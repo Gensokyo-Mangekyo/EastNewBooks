@@ -3,6 +3,7 @@ import Nav from "../components/UI/Nav/Nav";
 import RegContainer from "../components/RegConatainer";
 import { useNavigate } from "react-router-dom";
 import GlobalService from "../API/GlobalService";
+import Header from "../components/UI/Header/Header";
 
 
 function getCookie(cookieName) {
@@ -32,6 +33,7 @@ export default function Reg() {
       },[])
 
     return (<div>
+             <Header/>
          <Nav Navigate = {GlobalService.Navigation} />
      <RegContainer/>
     </div>)

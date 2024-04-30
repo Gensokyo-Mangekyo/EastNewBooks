@@ -8,7 +8,7 @@ export default class GlobalService {
         Name: "Главная"
        },
        {
-        Link: "/",
+        Link: "/Bucket",
         Name: "Корзина"
        },
        {

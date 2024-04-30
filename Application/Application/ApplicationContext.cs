@@ -13,6 +13,7 @@ namespace Application
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Publisher> Publishers { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Bucket> Bucket { get; set; } = null!;
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();

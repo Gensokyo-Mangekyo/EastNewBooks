@@ -39,6 +39,15 @@ export default class UsersService {
            }
     }
 
+    static async GetUser(login,password) {
+        try {
+            const response = await axios.get(UsersService.host + "/GetUser?login="+login + "&password="+password)
+            return response.data
+           } catch(e) {
+            console.log(e)
+           }
+    }
+
     static async GetRole(login,password,Role) {
         try {
             const response = await axios.get(UsersService.host + "/GetUser?login="+login + "&password="+password)

@@ -7,6 +7,7 @@ import AdminNav from "../components/UI/Nav/AdminNav";
 import Category from "../components/UI/Category/Category";
 import BookInformation from "../components/Books/BookInfromation";
 import GlobalService from "../API/GlobalService";
+import Header from "../components/UI/Header/Header";
 
 
 export default function ShowInfoBook() {

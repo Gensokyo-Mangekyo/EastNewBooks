@@ -1,0 +1,139 @@
+
+.BucketMain {
+    background-color: #fff;
+	border-radius: 16px;
+	padding: 2px 24px;
+	margin: 0 auto;
+	max-width: 35%; 
+	margin-bottom: 24px;
+    margin-top: 22px;
+}
+
+.BucketItem {
+    margin-top: 10px;
+	background-color: #f9f9f9;
+    border-radius: 10px;
+    max-width: 95%;
+    padding-top: 15px;
+    padding-left: 20px;
+  }
+
+.BucketHeader {
+    font-size: 35px;
+    font-weight: bold;
+    margin: auto;
+    text-align: center;
+}
+
+.BookImg {
+    max-width: 150px;
+    max-height: 200px;
+    margin-bottom: 15px;
+    border-style: solid;
+    border-color: #706e6e;
+}
+
+.FlexBucketContainer {
+    display: flex;
+    gap: 25%;
+    margin-bottom: 15px;
+}
+
+.InfoContainer {
+    width: 100%;
+    margin-right: 50%;
+}
+
+.PriceBook {
+    font-size: 35px;
+    color: #ff0052;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.CountContainer {
+    margin-top: 15px;
+    display:  flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.Block {
+    background-color: #ff0052;
+    color: #fff;
+    font-size: 33px;
+    font-weight: bold;
+    text-align: center;
+    width: 40px;
+    max-height: 40px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.Count {
+    background-color: #fff;
+    font-size: 35px;
+    width: 40px;
+    font-weight: bold;
+    text-align: center;
+    max-height: 40px;
+    user-select: none;
+}
+
+.RemoveButton {
+    padding: 10px;
+    background-color: #ff0052;
+    color: #fff;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px auto;
+    text-align: center;
+    max-width: 100px;
+    max-height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.Empty {
+    text-align:  center;
+    font-size: 35px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+
+
+@media screen and (max-width: 1500px) {
+    .InfoContainer {
+        margin-left: -25px;
+    }
+
+    .Block  {
+        font-size: 25px;
+    }
+
+    .Count {
+        font-size: 28px;
+    }
+
+    .PriceBook {
+        font-size: 30px;
+    }
+    
+    .BucketHeader {
+        font-size: 30px;
+    }
+}
+
+
+@media screen and (max-width: 1300px) {
+    .InfoContainer {
+        margin-left: -35px;
+    }
+}
+
+

@@ -5,6 +5,8 @@ import InputValue from "../UI/input/InputValue"
 import UsersService from "../../API/UsersService"
 import GlobalService from "../../API/GlobalService"
 import "./Books.css"
+import BucketService from "../../API/BucketService"
+import { useNavigate} from "react-router-dom"
 
 export default function BookInformation(props) {
 
@@ -18,6 +20,8 @@ export default function BookInformation(props) {
 		pages: {Changing: false, Value: props.book.pages },
 		description: {Changing: false, Value: props.book.description }
 	})
+
+	const navigate = useNavigate()
 
 	async function SetInput(Key,Value) {
 		const Data = GlobalService.GetLoginAndPassword()
@@ -80,7 +84,18 @@ export default function BookInformation(props) {
 	UndefinedValueChange("publisher","Издатель","Издатель: Неизвестен",30)
 	UndefinedValueChange("description",null,"Описание книги отсуствует",500)
 
-	
+	async function ClickBucket() {
+		const Data = GlobalService.GetLoginAndPassword()
+		if (Data["Login"] && Data["Password"]) {
+		const User = await  UsersService.GetUser(Data["Login"],Data["Password"])
+		const BookUser = {
+			UserId: User.id,
+			BookId: props.book.id
+		}
+		await BucketService.AddBucket(BookUser)
+		navigate("/Bucket")
+	}
+	}
 
     return(
         <div>
@@ -91,7 +106,7 @@ export default function BookInformation(props) {
 		      { ChangingValue["price"].Changing === false ?   <p onDoubleClick={()=> {
 						SetInput("price",true)
 				}} >{ChangingValue["price"].Value}₽</p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"price")}} onBlur={(e)=> {SetInput("price",false)}} maxLength={5} defaultValue={ChangingValue["price"].Value} onChange= {(e)=>{NumberValue(e,"price")}} /> }
-		        <BucketButton>В корзину</BucketButton>
+		        <BucketButton onClick={ClickBucket} >В корзину</BucketButton>
               </div>
               <div className="RightPart">
 		    <div className="HeaderBook">

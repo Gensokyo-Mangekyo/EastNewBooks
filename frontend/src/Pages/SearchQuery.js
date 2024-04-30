@@ -7,6 +7,7 @@ import Pagination from "../components/UI/Pagination/Pagination";
 import Search from "../components/UI/Search/Search";
 import Category from "../components/UI/Category/Category";
 import GlobalService from "../API/GlobalService";
+import Header from "../components/UI/Header/Header";
 
 export default function SearchQuery() {
     const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function SearchQuery() {
          },[])
     return (
         <div>
+            <Header/>
         <Nav Navigate = {GlobalService.Navigation} />
             <Category List={Categories} />
             <Search Change = {(e)=> {
