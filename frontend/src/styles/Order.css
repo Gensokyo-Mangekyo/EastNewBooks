@@ -1,0 +1,112 @@
+
+.OrderMain {
+    background-color: #fff;
+	border-radius: 16px;
+	padding: 2px 24px;
+	margin: 0 auto;
+	max-width: 40%; 
+	margin-bottom: 24px;
+    margin-top: 22px;
+}
+
+.OrderContainer {
+    margin-bottom: 25px;
+}
+
+.DataContainer {
+    display: inline-block;
+    width: 45%;
+    margin-right: 5%;
+}
+
+.OrderInformation {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 50%;
+}
+
+.HeaderOrder {
+    font-weight: bold;
+    font-size: 28px;
+    margin: 0;
+}
+
+.ElementBucket {
+    margin-top: 0px;
+    width: 100%;
+}
+
+.ImgElement {
+    max-height: 80px;
+    max-width: 70px;
+    border-style: solid;
+    border-color: #706e6e;
+}
+
+.NameBook {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #3b3a3a;
+    margin-bottom: 0;
+    max-width: 90%;
+}
+
+.PriceElement {
+    text-align: center;
+    font-size: 27px;
+    margin-top: 7px;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #ff0052;
+}
+
+.OrderList {
+    min-height: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.SellerText {
+    font-size: 25px;
+    margin-top: 10px;
+    color: #ff0052;
+    font-weight: bold;
+    text-align: center;
+}
+
+.SendOrder {
+    margin: 10px auto;
+    background-color: #ff0052;
+    font-size: 25px;
+    text-align: center;
+    color: #fff;
+    padding: 15px;
+    font-weight: bold;
+    width: 70%;
+    cursor: pointer;
+}
+
+.SumText {
+    margin-top: 20px;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.SumPrice {
+    margin-top: 15px;
+    font-size: 45px;
+    font-weight: bold;
+    color: #ff0052;
+    text-align: center;
+}
+
+.ErrorOrder {
+    text-align: center;
+    color: red;
+}
+

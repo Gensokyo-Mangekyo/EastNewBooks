@@ -10,6 +10,7 @@ import Reg from './Pages/Reg';
 import UserCabinet from './Pages/UserCabinet'
 import Publishers from './Pages/Publishers';
 import Bucket from './Pages/Bucket';
+import Order from './Pages/Order';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,6 +28,7 @@ root.render(
     <Route path='/Publishers' element={<Publishers></Publishers>}></Route>
     <Route path='/Bucket' element={<Bucket></Bucket>}></Route>
     <Route path='*' element={<div>Страница не найдена!</div>}></Route>
+    <Route path='/Order' element={<Order/>} ></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

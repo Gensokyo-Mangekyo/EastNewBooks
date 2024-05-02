@@ -26,7 +26,9 @@ namespace Application.Controllers
                         (item.Id,
                         Book.Name,
                         Book.Price,
-                        item.Count)
+                        item.Count,
+                        Book.Url,
+                        Book.Id)
                     );
                 }
             }

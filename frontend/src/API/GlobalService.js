@@ -12,7 +12,7 @@ export default class GlobalService {
         Name: "Корзина"
        },
        {
-        Link: "/",
+        Link: "/Order",
         Name: "Оформить заказ"
        },
        {
@@ -43,6 +43,33 @@ export default class GlobalService {
             }
         }
         return "";
+      }
+
+      static NumberValue(e,key,Array,SetArray) {
+        if (e.target.value === "") {
+          return;
+        }
+        let prevValue = Array[key]
+        const NumbersValue = parseFloat(e.target.value)
+        if (!isNaN(e.target.value))  
+        {
+          const NewArray = Array
+          NewArray[key] = NumbersValue
+          SetArray(NewArray)
+        }
+        else { 
+          e.target.value = prevValue; 
+        }
+      }
+
+      static getFormattedDate() {
+        const currentDate = new Date();
+        const day = currentDate.getDate();
+        const month = currentDate.getMonth() + 1; 
+        const year = currentDate.getFullYear();
+        const formattedDay = day < 10 ? '0' + day : day;
+        const formattedMonth = month < 10 ? '0' + month : month;
+        return `${formattedDay}.${formattedMonth}.${year}`;
       }
 
       static GetLoginAndPassword() {

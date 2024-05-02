@@ -1,5 +1,4 @@
 import { useState,useEffect } from "react"
-import img from "../images/c_4_0.jpg"
 import "../styles/Bucket.css"
 import GlobalService from "../API/GlobalService"
 import BucketService from "../API/BucketService"
@@ -34,6 +33,7 @@ export default function BucketContainer() {
         if (Data["Login"] || Data["Password"]) {
             GetBucketData(Data["Login"],Data["Password"]) 
             }
+            else SetEmptyBucket(true)
         },[])
 
 
@@ -76,7 +76,7 @@ export default function BucketContainer() {
                 <div id={x.id} className="BucketItem" >
                 <div className="FlexBucketContainer" >
                     <div className="BookContainer" >
-                    <img className="BookImg" src={img} />
+                    <img className="BookImg" src={BucketService.host + "/" + x.url} />
                     </div>
                 <div className="InfoContainer"  >
                     <p className="BucketHeader">
