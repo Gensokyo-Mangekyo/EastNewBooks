@@ -45,6 +45,10 @@ namespace Application.Controllers
                 }
                 applicationContext.Books.Add(CloneBook);
                 applicationContext.SaveChanges();
+                Book book = applicationContext.Books.OrderBy(x => x.Id).Last();
+                var Stock = new Stock(book);
+                applicationContext.Stock.Add(Stock);
+                applicationContext.SaveChanges();
                 return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Last());
             }
             else
@@ -76,7 +80,7 @@ namespace Application.Controllers
             return GetLastPage(applicationContext.Books);
             else
             {
-                var Books = applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == filter).AsEnumerable();
+                var Books = applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == filter && x.IsStock == true).AsEnumerable();
                 return GetLastPage(Books);
             }
         }
@@ -85,14 +89,14 @@ namespace Application.Controllers
         [Route("/GetBooks")]
         public IActionResult GetBooks(int page, [FromServices] ApplicationContext applicationContext)
         {
-            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
+            return new JsonResult(applicationContext.Books.Where(x => x.IsStock == true).OrderBy(item => item.Id).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
         }
 
         [HttpGet]
         [Route("/CategoryBooks")]
         public IActionResult CategoryBooks(string category, int page, [FromServices] ApplicationContext applicationContext)
         {
-            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == category).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
+            return new JsonResult(applicationContext.Books.OrderBy(item => item.Id).Where(x => x.Category != null).Where(x => x.Category.Name == category && x.IsStock == true).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
         }
 
 
@@ -102,7 +106,7 @@ namespace Application.Controllers
         {
             List<Book> searchBooks = new List<Book>();
 
-            Array.ForEach(applicationContext.Books.OrderBy(item => item.Id).ToArray(), (x) =>
+            Array.ForEach(applicationContext.Books.Where(x=> x.IsStock == true).OrderBy(item => item.Id).ToArray(), (x) =>
             {
                 if (x.Name.ToLower().Contains(query.ToLower()))
                     searchBooks.Add(x);
@@ -129,7 +133,7 @@ namespace Application.Controllers
             var Book = applicationContext.Books.Where(item => item.Id == id).First();
             var Publisher = applicationContext.Publishers.Where(x => x.Id == Book.PublisherId).FirstOrDefault();
             var Category = applicationContext.Categories.Where(x => x.Id == Book.CategoryId).FirstOrDefault();
-            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year, Book.Author,Book.Url, Publisher = Publisher?.Name, Category = Category?.Name, Book?.Description });
+            return new JsonResult(new { Book.Id,Book.Name,Book.Pages,Book.Price,Book.Year, Book.Author,Book.IsStock,Book.Url, Publisher = Publisher?.Name, Category = Category?.Name, Book?.Description });
         }
 
         [HttpPost]

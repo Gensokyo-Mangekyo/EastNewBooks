@@ -106,7 +106,7 @@ export default function BookInformation(props) {
 		      { ChangingValue["price"].Changing === false ?   <p onDoubleClick={()=> {
 						SetInput("price",true)
 				}} >{ChangingValue["price"].Value}₽</p> : <InputValue onKeyDown={(e)=> {ConfirmInput(e,"price")}} onBlur={(e)=> {SetInput("price",false)}} maxLength={5} defaultValue={ChangingValue["price"].Value} onChange= {(e)=>{NumberValue(e,"price")}} /> }
-		        <BucketButton onClick={ClickBucket} >В корзину</BucketButton>
+		       {props.book.isStock === true ? <BucketButton onClick={ClickBucket} >В корзину</BucketButton> : <BucketButton>Распродано!</BucketButton> }  
               </div>
               <div className="RightPart">
 		    <div className="HeaderBook">

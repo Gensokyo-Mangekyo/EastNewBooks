@@ -21,18 +21,26 @@ function getCookie(cookieName) {
     return "";
   }
 
+  async function NavigateUser(navigate,login,password) {
+   const Url = await UsersService.GetUrl(login,password)
+      navigate(Url)
+  }
+
 export default function Auth() {
 
     const [UserPanel,SetUserPanel] = useState(false)
     const navigate = useNavigate();
 
     useEffect(()=>{
-      if (sessionStorage.getItem("UserLogin") && sessionStorage.getItem("UserPassword"))
-      navigate('/UserCabinet')
-      const login = getCookie("UserLogin")
-      const password = getCookie("UserPassword")
-      if (login !== "" && password !== "")
-         navigate("/UserCabinet") 
+      let login = sessionStorage.getItem("UserLogin") 
+      let password = sessionStorage.getItem("UserPassword")
+      if (login && password)
+         NavigateUser(navigate,login,password)
+
+      login = getCookie("UserLogin")
+      password = getCookie("UserPassword")
+      if (login && password )
+         NavigateUser(navigate,login,password)
     },[])
 
     async function SetValueFieldsCallback(value) {

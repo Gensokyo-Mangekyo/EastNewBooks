@@ -7,6 +7,9 @@
 	max-width: 35%; 
 	margin-bottom: 24px;
     margin-top: 22px;
+    height: 720px;
+    max-height: 800px;
+    overflow-y: auto;
 }
 
 .BucketItem {

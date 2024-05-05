@@ -15,6 +15,16 @@ namespace Application.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        [Route("/GetOrders")]
+        public IActionResult GetOrders([FromBody] OrderModel OrderModel, [FromServices] ApplicationContext applicationContext)
+        {
+
+
+            return new JsonResult(new { });
+        }
+
         [HttpPost]
         [Route("/AddOrder")]
         public int AddOrder([FromBody] OrderModel OrderModel, [FromServices] ApplicationContext applicationContext)

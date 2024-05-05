@@ -16,6 +16,8 @@ namespace Application
         public DbSet<Bucket> Bucket { get; set; } = null!;
         public DbSet<Order> Order { get; set; } = null!;
         public DbSet<UserBookOrder> UserBookOrder { get; set; } = null!;
+        public DbSet<Stock> Stock { get; set; } = null!;
+        public DbSet<Sale> Sale { get; set; } = null!;
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();

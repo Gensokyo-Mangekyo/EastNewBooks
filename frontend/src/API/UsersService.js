@@ -28,9 +28,9 @@ export default class UsersService {
             const response = await axios.get(UsersService.host + "/GetUser?login="+login + "&password="+password)
             const Url = {
                 "Пользователь": "/UserCabinet",
-                "Продавец": "/UserCabinet",
+                "Продавец": "/SellerCabinet",
                 "Менеджер": "/ManagerCabinet",
-                "Администратор": "/Admin",
+                "Администратор": "/AdminCabinet",
             }
             return Url[response.data["role"]]
 

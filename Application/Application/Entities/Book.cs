@@ -17,8 +17,9 @@ namespace Application.Entities
         public string? Description { get; set; } = null;
         public int? CategoryId { get; set; } = null;
         public int? PublisherId { get; set; } = null;
+        public bool IsStock { get; set; } = true;
 
-        public Book(int id, string url, int year, string name, string author, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
+    public Book(int id, string url, int year, string name, string author, int pages, decimal price,Category category = null, Publisher publisher = null, string description = null)
         {
             Id = id;
             Url = url;

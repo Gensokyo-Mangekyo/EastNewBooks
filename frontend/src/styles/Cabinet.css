@@ -1,0 +1,221 @@
+.CabinetMain {
+    background-color: #fff;
+	border-radius: 16px;
+	padding: 2px 24px;
+	margin: 0 auto;
+	width: 100%; 
+	margin-bottom: 24px;
+    margin-top: 22px;
+    min-height: 720px;
+}
+
+.Avatar {
+    height: 126px;
+    width: 256px;
+    float: left;
+}
+
+.PersonContainer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    max-width: 40%;
+    margin: 0 auto;
+}
+
+.Welcome {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.PersonInfo {
+    font-size: 40px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1300px) {
+    .Welcome {
+        font-size: 30px;
+    }
+    .PersonInfo {
+        font-size: 30px;
+    }
+}
+
+.SellOrderContainer {
+    overflow-y: auto;
+    max-width: 90%;
+    margin-bottom: 5px;
+    max-height: 600px;
+    margin: 25px auto;
+}
+
+.ItemSellOrder {
+    overflow: auto;
+    height: 140px;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.UserName {
+    margin: 15px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.StadartText {
+    font-size: 25px;
+    text-align:  center;
+    font-weight: bold;
+}
+
+.Spacing {
+    letter-spacing: 2px;
+}
+
+.Sum2 {
+    font-size: 30px;
+    text-align:  center;
+    font-weight: bold;
+    margin-top: 1px;
+    color: #ff0052;
+}
+
+.BooksOrders {
+    width: 300px;
+}   
+
+.BookHeader {
+    margin: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.BookItem {
+    text-align: center;
+    font-size: 22px;
+    line-height: 5px;
+    font-weight: bold;
+}
+
+.BookPriceInormation {
+    font-size: 28px;
+    color: #ff0052;
+}
+
+.BlockBook {
+    margin-bottom: 1px;
+}
+
+.AllBookInOrder {
+    margin-top: -15px;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+}
+
+.FunctionsOrder {
+    width: 200px;
+    height: 100px;
+}
+
+.StatusOrder {
+    text-align: center;
+    font-size: 25px;
+    line-height: 5px;
+    font-weight: bold;
+}
+
+.StatusText {
+   height: 30px;
+}
+
+.StatusText input {
+    height: 100%;
+ }
+
+ .DeleteButton {
+    text-align: center;
+    height: 25px;
+    padding: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ff0052;
+ }
+
+ .DeleteButton:hover {
+    color: black;
+ }
+
+ .DeleteButton:after {
+    color: #fff;
+ }
+
+ .CabinetGrid {
+    display:  grid;
+    grid-template-columns: 20% 80% 25%;
+    grid-gap: 10%;
+    justify-content: center;
+ }
+
+ .Phone {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: -15px;
+ }
+
+ .UserStatusText {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-bottom: 25px;
+ }
+
+ .DetailsButton {
+    text-align: center;
+    height: 25px;
+    padding: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white;
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ff0052;
+ }
+
+ .DetailsButton:hover {
+    color: black;
+ }
+
+ .DetailsButton:after {
+  color: #fff;  
+ }
+
+ .HeaderModal {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px;
+ }
+
+ .ModalText {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 30;
+ }
