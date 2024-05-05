@@ -13,12 +13,14 @@ namespace Application.Entities
         public Order Order { get; set; }
         public int OrderId { get; set; }
         public int Count { get; set; }
+        public int Price { get; set; }
 
-        public UserBookOrder(int bookId, int orderId, int count)
+        public UserBookOrder(int bookId, int orderId, int count,int price)
         {
             BookId = bookId;
             OrderId = orderId;
             Count = count;
+            Price = price;
         }
 
         public UserBookOrder()

@@ -4,13 +4,16 @@ import ModalInfo from "./UI/ModalWindows/ModalInfo"
 export default function UserContainer() {
 
     const [Visible,SetVisible] = useState(false)
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     return(
         <div className="SellOrderContainer">
 
 {Visible === true ? <ModalInfo SetVisible={SetVisible} >
         <div className="HeaderModal">
             Информация заказа №228
+        </div>
+         <div className="ModalText" >
+            Дата: 15.10.2023
         </div>
         <div className="ModalText" >
             Почта: example@mail.ru
@@ -62,7 +65,6 @@ export default function UserContainer() {
                 <div className="DeleteButton">
                     Отменить
                 </div>
-                 
                  </div>
             </div>
         </div> 

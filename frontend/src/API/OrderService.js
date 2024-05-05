@@ -12,5 +12,14 @@ export default class OrderService  {
                 console.log(e)
         }
     }
+
+    static async GetAllOrders() {
+        try {
+            const response = await axios.get(OrderService.host + "/GetAllOrders")
+            return response.data
+              } catch(e) {
+                  console.log(e)
+          }
+    }
    
 }

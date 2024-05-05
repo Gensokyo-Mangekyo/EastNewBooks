@@ -4,10 +4,11 @@ import ModalInfo from "./UI/ModalWindows/ModalInfo"
 import { useState } from "react"
 
 
-export default function SellOrderContainer() {
+export default function SellOrderContainer(props) {
 
     const [Visible,SetVisible] = useState(false)
 
+    
     return (  <div className="SellOrderContainer">
        {Visible === true ? <ModalInfo SetVisible={SetVisible} >
         <div className="HeaderModal">
@@ -29,42 +30,43 @@ export default function SellOrderContainer() {
             Сумма заказа: 852₽
         </div>
         </ModalInfo> : "" } 
-    <div className="ItemSellOrder">
-        <div>
-        <div className="UserName"> Андрей Мирошниченко</div>
-        <div className="Phone">Телефон</div>
-        <div className="StadartText Spacing">+9381081478</div>
-        <div onClick={()=> SetVisible(true) } className="DetailsButton">
-                Подробнее
-            </div>
-        </div>
-        <div>
-        <div className="BooksOrders">
-            <p className="BookHeader">Книги</p>
-            <div className="AllBookInOrder" >
-                <div className="BlockBook" >
-                <p className="BookItem">PHP и MySQL x1 </p>
-                <p className="BookItem BookPriceInormation">225₽</p>
-                </div>
-                <div className="BlockBook" >
-                <p className="BookItem">PHP и MySQL x1 </p>
-                <p className="BookItem BookPriceInormation">225₽</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div>
-        <div className="FunctionsOrder" >
-            <p className="StatusOrder" >Статус</p>
-            <div className="StatusText">
-            <InputValue defaultValue={"Рассматривается"} />
-            </div>
-            <div className="DeleteButton">
-                Удалить
-            </div>
-             
-             </div>
-        </div>
-    </div>     
+        {props.Orders !== undefined ? 
+            props.Orders.map(x=> (
+          <div className="ItemSellOrder">
+          <div className="LeftSellOrder" >
+          <div className="UserName"> {x.user.name} {x.user.surname}</div>
+          <div className="Phone">Телефон</div>
+          <div className="StadartText Spacing">{x.user.phone} </div>
+          <div onClick={()=> SetVisible(true) } className="DetailsButton">
+                  Подробнее
+              </div>
+          </div>
+          <div>
+          <div className="BooksOrders">
+              <p className="BookHeader">Книги</p>
+              <div className="AllBookInOrder" >
+                    {x.orderBooks.map(x=> (
+                            <div className="BlockBook" >
+                            <p className="BookItem"> {x.book.name} x {x.count} </p>
+                            <p className="BookItem BookPriceInormation">{x.price}₽</p>
+                            </div>
+                    ))}
+              </div>
+              </div>
+          </div>
+          <div>
+          <div className="FunctionsOrder" >
+              <p className="StatusOrder" >Статус</p>
+              <div className="StatusText">
+              <InputValue defaultValue={x.status} />
+              </div>
+              <div className="DeleteButton">
+                  Удалить
+              </div>
+               
+               </div>
+          </div>
+      </div> ))  : ""}
+    
 </div>)
 }

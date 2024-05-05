@@ -28,7 +28,8 @@ export default function OrderContainer(props) {
         props.Bucket.map(x=> {
             BooksOrder.push({
                 BookId: x.bookId,
-                Count: x.count
+                Count: x.count,
+                Price: x.price
             })
         })
 
