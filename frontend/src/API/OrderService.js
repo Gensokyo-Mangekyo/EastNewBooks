@@ -21,5 +21,22 @@ export default class OrderService  {
                   console.log(e)
           }
     }
+
+    static async SetStatusOrder(id,status) {
+        try {
+          await axios.post(OrderService.host + "/SetStatusOrder?id=" + id + "&" + "status=" + status)
+              } catch(e) {
+                  console.log(e)
+          }
+    }
+
+    static async GetOrdersById(id) {
+        try {
+            const response = await axios.get(OrderService.host + "/GetOrdersById?userId=" + id)
+            return response.data
+              } catch(e) {
+                  console.log(e)
+          }
+    }
    
 }

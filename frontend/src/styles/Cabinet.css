@@ -60,7 +60,6 @@
     background-color: #f9f9f9;
     border-radius: 3px;
     display: flex;
-    gap: 10px;
     margin-bottom: 25px;
 }
 
@@ -101,7 +100,7 @@
 }
 
 .LeftSellOrder {
-    width: 30%;
+    width: 340px;
 }
 
 .BookItem {
@@ -128,7 +127,7 @@
 }
 
 .FunctionsOrder {
-    width: 200px;
+    width: 230px;
     height: 100px;
 }
 
@@ -223,4 +222,21 @@
     font-size: 20px;
     font-weight: bold;
     margin: 30;
+ }
+
+ .ExitButton {
+    background-color: #ff0052;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    border-radius: 3px;
+    padding: 7px;
+    cursor: pointer;
+    user-select: none;
+ }
+
+ .FlexSpace {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
  }

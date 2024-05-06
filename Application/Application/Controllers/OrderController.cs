@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Controllers
 {
@@ -16,33 +17,70 @@ namespace Application.Controllers
         }
 
 
-        [HttpGet]
-        [Route("/GetAllOrders")]
-        public IActionResult GetAllOrders([FromServices] ApplicationContext applicationContext)
+        private JsonResult GetOrders(IEnumerable<Order> order, ApplicationContext applicationContext)
         {
-            var OrderModels = new  List<object>();
-            var Orders = applicationContext.Order.ToList();
-            foreach (var item in Orders)
+            var OrderModels = new List<object>();
+            foreach (var item in order)
             {
                 var User = applicationContext.Users.Where(x => x.Id == item.UserId).FirstOrDefault();
                 if (User != null)
                 {
                     var OrderModel = new OrderModel();
                     var ListOrderBook = new List<object>();
-                      foreach (var UserBookOrder in applicationContext.UserBookOrder.Where(x=> x.OrderId == item.Id))
-                        {
+                    foreach (var UserBookOrder in applicationContext.UserBookOrder.Where(x => x.OrderId == item.Id))
+                    {
                         var Book = applicationContext.Books.Where(x => x.Id == UserBookOrder.BookId).FirstOrDefault();
-                            if (Book != null)
+                        if (Book != null)
                             ListOrderBook.Add(new { Count = UserBookOrder.Count, Book = Book, Price = UserBookOrder.Price });
-                        
-                        }
+
+                    }
                     OrderModel.User = User;
                     //Field User not add in Json Object because creating anonim class object!!!
-                    OrderModels.Add(new { Id = OrderModel.Id, User = new { Name = User.Name, Surname = User.Surname, Phone = User.Phone, Email = User.Email }, OrderBooks = ListOrderBook, Address = item.Address, City = item.City, DepartureDate = item.DepartureDate, 
-                        Status = item.Status, Index = item.Index } );;
+                    OrderModels.Add(new
+                    {
+                        Id = item.Id,
+                        User = new { Name = User.Name, Surname = User.Surname, Phone = User.Phone, Email = User.Email },
+                        OrderBooks = ListOrderBook,
+                        Address = item.Address,
+                        City = item.City,
+                        DepartureDate = item.DepartureDate,
+                        Status = item.Status,
+                        Index = item.Index
+                    }); ;
                 }
             }
             return new JsonResult(OrderModels);
+        }
+
+        [HttpGet]
+        [Route("/GetAllOrders")]
+        public IActionResult GetAllOrders([FromServices] ApplicationContext applicationContext)
+        {
+            var Orders = applicationContext.Order;
+            return GetOrders(Orders,applicationContext);
+        }
+
+        [HttpPost]
+        [Route("/SetStatusOrder")]
+        public IActionResult SetStatusOrder(int id, string status,[FromServices] ApplicationContext applicationContext)
+        {
+            var Order = applicationContext.Order.Where(x => x.Id == id).FirstOrDefault();
+            if (Order != null)
+            {
+                Order.Status = status;
+                applicationContext.Order.Update(Order);
+                applicationContext.SaveChanges();
+                return StatusCode(200);
+            }
+            return StatusCode(400);
+        }
+
+        [HttpGet]
+        [Route("/GetOrdersById")]
+        public IActionResult GetOrdersById(int userId, [FromServices] ApplicationContext applicationContext)
+        {
+            var Orders = applicationContext.Order.Where(x=> x.UserId == userId);
+            return GetOrders(Orders, applicationContext);
         }
 
         [HttpPost]

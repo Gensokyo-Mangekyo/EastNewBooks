@@ -24,7 +24,14 @@ export default function SellerCabinet() {
         
     async function GetAllOrders() {
         const Orders = await OrderService.GetAllOrders()
-        SetContainer(<SellOrderContainer Orders={Orders} />)
+        const sum = {}
+        Orders.map(x=> {
+            sum[x.id] = 0
+                x.orderBooks.map(n=> {
+                    sum[x.id] += n.price * n.count
+                })
+        })
+        SetContainer(<SellOrderContainer Sum={sum} Orders={Orders} />)
     }
 
     useEffect(()=>{
@@ -48,8 +55,16 @@ export default function SellerCabinet() {
         <Header/>
         <Nav Navigate = {GlobalService.Navigation} />
         <div className="CabinetGrid" >
-        <Menu List={[{Click: ()=> {
-            SetContainer(<UserContainer/>)
+        <Menu List={[{Click: async ()=> {
+              const Orders = await OrderService.GetOrdersById(User.id)
+              const sum = {}
+              Orders.map(x=> {
+                  sum[x.id] = 0
+                      x.orderBooks.map(n=> {
+                          sum[x.id] += n.price * n.count
+                      })
+              })
+            SetContainer(<UserContainer Sum={sum} Orders={Orders} />)
         }, Name: "Мои заказы" },
           {
             Click: async ()=> {
@@ -57,7 +72,13 @@ export default function SellerCabinet() {
             }, Name: "Заказы клиентов" 
           }   ]}  />
         <div className="CabinetMain" >
-            <h1>Личный кабинет</h1>
+            <div className="FlexSpace" >
+            <h1>Личный кабинет</h1> 
+            <div className="ExitButton" onClick={()=>{
+                GlobalService.exit()
+                navigate("/auth")
+            }} >Выход</div>
+            </div>
             <div className="BlockDisplay">
             <img className="Avatar" src={AvatarImg} ></img>
             {

@@ -1,43 +1,61 @@
 import InputValue from "./UI/input/InputValue"
 import "../styles/Cabinet.css"
 import ModalInfo from "./UI/ModalWindows/ModalInfo"
-import { useState } from "react"
+import { useState,useEffect } from "react"
+import OrderService from "../API/OrderService"
 
 
 export default function SellOrderContainer(props) {
 
     const [Visible,SetVisible] = useState(false)
+    const [Details,SetDetails] = useState({})
+    const [StatusArray,SetStatusArray] = useState([])
+        
+    useEffect(()=> {
+        const NewStatusArray = []
+        props.Orders.map(x=> {
+            NewStatusArray[x.id] = x.status
+        })
+        SetStatusArray(NewStatusArray)
+    },[])
 
-    
     return (  <div className="SellOrderContainer">
        {Visible === true ? <ModalInfo SetVisible={SetVisible} >
         <div className="HeaderModal">
-            Информация заказа №228
+            Информация заказа №{Details.id}
         </div>
         <div className="ModalText" >
-            Почта: example@mail.ru
+            Почта: {Details.email}
         </div>
         <div className="ModalText" >
-            Населённый пункт: Ростов-на-Дону 
+            Населённый пункт: {Details.city}
         </div>
         <div className="ModalText" >
-            Адрес: Портовая 240
+            Адрес: {Details.address}
         </div>
         <div className="ModalText" >
-            Индекс: 654324
+            Индекс: {Details.index}
         </div>
         <div className="ModalText" >
-            Сумма заказа: 852₽
+            Сумма заказа: {Details.sum}₽
         </div>
         </ModalInfo> : "" } 
         {props.Orders !== undefined ? 
             props.Orders.map(x=> (
-          <div className="ItemSellOrder">
+          <div id={x.id} className="ItemSellOrder">
           <div className="LeftSellOrder" >
           <div className="UserName"> {x.user.name} {x.user.surname}</div>
           <div className="Phone">Телефон</div>
           <div className="StadartText Spacing">{x.user.phone} </div>
-          <div onClick={()=> SetVisible(true) } className="DetailsButton">
+          <div onClick={()=>{ SetDetails({
+            id: x.id,
+            email: x.user.email,
+            address: x.address,
+            city: x.city,
+            index: x.index,
+            sum: props.Sum[x.id]
+
+          }); SetVisible(true) } } className="DetailsButton">
                   Подробнее
               </div>
           </div>
@@ -57,8 +75,23 @@ export default function SellOrderContainer(props) {
           <div>
           <div className="FunctionsOrder" >
               <p className="StatusOrder" >Статус</p>
-              <div className="StatusText">
-              <InputValue defaultValue={x.status} />
+              <div className="StatusText"> {
+                StatusArray[x.id] !== undefined ?
+              <InputValue maxLength={30} defaultValue={StatusArray[x.id]} onBlur={ async (e)=> {
+                if (e.target.value !== "") {
+                    SetStatusArray(prevState => {
+                        const updatedStatusArray = prevState.map((value,index) => {
+                            if (index === x.id) {
+                                return e.target.value;
+                            }
+                            return value;
+                        });
+                        return updatedStatusArray;
+                    });
+                    await OrderService.SetStatusOrder(x.id,e.target.value)
+                } else e.target.value = StatusArray[x.id]
+              }} /> : ""
+              }
               </div>
               <div className="DeleteButton">
                   Удалить

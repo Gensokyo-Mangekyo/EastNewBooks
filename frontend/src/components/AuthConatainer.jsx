@@ -18,7 +18,7 @@ export default function AuthContainer(props) {
   const [Login,SetLogin] = useState("")
   const [Password,SetPassword] = useState("")
   const [Error,SetError] = useState(false)
-  const [Cookie,SetCookie] = useState(false)
+  const [IsCookie,SetIsCookie] = useState(false)
   const navigate = useNavigate()
         return(
             <div className="AuthContainer">
@@ -41,7 +41,7 @@ export default function AuthContainer(props) {
                   GlobalService.setCookie("UserPassword",Password,-1)
                            const StatusCode = await UsersService.IsExistUser(Login,Password)
                            if (StatusCode === 200) {
-                           if (Cookie) {
+                           if (IsCookie) {
                            GlobalService.setCookie("UserLogin",Login,30)
                            GlobalService.setCookie("UserPassword",Password,30)
                            }
@@ -56,7 +56,7 @@ export default function AuthContainer(props) {
                  }}>Авторизоваться</Button>
                  </div>
                  <div className="RememberMe" ><input onChange={(e)=> {
-                    GlobalService.SetCookie(e.target.checked)
+                    SetIsCookie(e.target.checked)
                  }} type="checkbox" /> <span>Запомнить меня</span> </div>
                     <div className="AuthButton" >
                     <LabelRef onClick={()=> {

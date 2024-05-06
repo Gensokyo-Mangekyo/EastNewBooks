@@ -45,6 +45,13 @@ export default class GlobalService {
         return "";
       }
 
+      static exit() {
+        this.setCookie("UserLogin","",0)
+        this.setCookie("UserPassword","",0)
+        sessionStorage.removeItem("UserLogin")
+        sessionStorage.removeItem("serPassword")
+      }
+
       static NumberValue(e,key,Array,SetArray) {
         if (e.target.value === "") {
           return;
