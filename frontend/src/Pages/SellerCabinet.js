@@ -14,7 +14,10 @@ export default function SellerCabinet() {
 
     const navigate = useNavigate()
     const [Container,SetContainer] = useState()
+    const [IsSellOrder,SetIsSellOrder] = useState(true)
     const [User,SetUser] = useState()
+    const [Orders,SetOrders] = useState()
+    const [Sum,SetSum] = useState(0)
     async function NavigateUser(navigate,login,password) {
         const Url = await UsersService.GetUrl(login,password)
            navigate(Url)
@@ -22,8 +25,15 @@ export default function SellerCabinet() {
         SetUser(User)
        }
         
+    async function RemoveOrder(id) {
+        await OrderService.RemoveOrder(id)
+        const NewOrders = Orders.filter(x=> x.id !== id)
+        SetOrders(NewOrders)
+    }
+
     async function GetAllOrders() {
         const Orders = await OrderService.GetAllOrders()
+        SetIsSellOrder(true)
         const sum = {}
         Orders.map(x=> {
             sum[x.id] = 0
@@ -31,7 +41,8 @@ export default function SellerCabinet() {
                     sum[x.id] += n.price * n.count
                 })
         })
-        SetContainer(<SellOrderContainer Sum={sum} Orders={Orders} />)
+        SetSum(sum)
+        SetOrders(Orders)
     }
 
     useEffect(()=>{
@@ -47,24 +58,32 @@ export default function SellerCabinet() {
         else navigate("/")
            }
            else    GetAllOrders()
-   
-     
       },[])
+      
+      useEffect(()=> {
+        if (Orders !== undefined) {
+            if (IsSellOrder === true)
+        SetContainer(<SellOrderContainer RemoveOrder={RemoveOrder} Sum={Sum} Orders={Orders} />)
+        else         SetContainer(<UserContainer RemoveOrder={RemoveOrder} Sum={Sum} Orders={Orders} />)
+        }
+      },[Orders])
 
     return (<div>
         <Header/>
         <Nav Navigate = {GlobalService.Navigation} />
         <div className="CabinetGrid" >
         <Menu List={[{Click: async ()=> {
-              const Orders = await OrderService.GetOrdersById(User.id)
+              const ResponseOrders = await OrderService.GetOrdersById(User.id)
+              SetIsSellOrder(false)
               const sum = {}
-              Orders.map(x=> {
+              ResponseOrders.map(x=> {
                   sum[x.id] = 0
                       x.orderBooks.map(n=> {
                           sum[x.id] += n.price * n.count
                       })
               })
-            SetContainer(<UserContainer Sum={sum} Orders={Orders} />)
+              SetOrders(ResponseOrders)
+              SetSum(sum)
         }, Name: "Мои заказы" },
           {
             Click: async ()=> {

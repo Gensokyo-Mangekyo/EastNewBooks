@@ -61,6 +61,19 @@ namespace Application.Controllers
         }
 
         [HttpPost]
+        [Route("/RemoveOrder")]
+        public IActionResult RemoveOrder(int id,[FromServices] ApplicationContext applicationContext)
+        {
+            var Order = applicationContext.Order.Where(x => x.Id == id).FirstOrDefault();
+            if (Order != null)
+            {
+                applicationContext.Order.Remove(Order);
+                applicationContext.SaveChanges();
+            }
+            return StatusCode(200);
+        }
+
+        [HttpPost]
         [Route("/SetStatusOrder")]
         public IActionResult SetStatusOrder(int id, string status,[FromServices] ApplicationContext applicationContext)
         {

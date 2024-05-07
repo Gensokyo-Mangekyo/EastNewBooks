@@ -93,7 +93,9 @@ export default function SellOrderContainer(props) {
               }} /> : ""
               }
               </div>
-              <div className="DeleteButton">
+              <div onClick={()=> {
+                    props.RemoveOrder(x.id)
+              }} className="DeleteButton">
                   Удалить
               </div>
                

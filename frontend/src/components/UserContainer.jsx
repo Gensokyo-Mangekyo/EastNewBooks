@@ -67,7 +67,9 @@ export default function UserContainer(props) {
                 <div className="UserStatusText">
                 {x.status}
                 </div>
-                <div className="DeleteButton">
+                <div onClick={()=> {
+                    props.RemoveOrder(x.id)
+                }} className="DeleteButton">
                     Отменить
                 </div>
                  </div>

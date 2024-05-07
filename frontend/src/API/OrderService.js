@@ -22,6 +22,14 @@ export default class OrderService  {
           }
     }
 
+    static async RemoveOrder(id) {
+        try {
+            await axios.post(OrderService.host + "/RemoveOrder?id="+id)
+              } catch(e) {
+                  console.log(e)
+          }
+    }
+
     static async SetStatusOrder(id,status) {
         try {
           await axios.post(OrderService.host + "/SetStatusOrder?id=" + id + "&" + "status=" + status)
