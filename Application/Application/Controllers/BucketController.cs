@@ -79,9 +79,16 @@ namespace Application.Controllers
             {
                 if (Bucket.Count + 1 <= 10)
                 {
-                    Bucket.Count += 1;
-                    applicationContext.Bucket.Update(Bucket);
-                    applicationContext.SaveChanges();
+                    var Stock = applicationContext.Stock.Where(x => x.BookId == Bucket.BookId).FirstOrDefault();
+                    if (Stock != null)
+                    {
+                        if (Stock.Count > Bucket.Count)
+                        {
+                            Bucket.Count += 1;
+                            applicationContext.Bucket.Update(Bucket);
+                            applicationContext.SaveChanges();
+                        }
+                    }
                 }
                 return Bucket.Count;
             }
@@ -97,9 +104,9 @@ namespace Application.Controllers
             {
                 if (Bucket.Count-1 > 0)
                 {
-                    Bucket.Count -= 1;
-                    applicationContext.Bucket.Update(Bucket);
-                    applicationContext.SaveChanges();
+                            Bucket.Count -= 1;
+                            applicationContext.Bucket.Update(Bucket);
+                            applicationContext.SaveChanges();
                 }
                 return Bucket.Count;
             }

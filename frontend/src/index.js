@@ -12,6 +12,7 @@ import Publishers from './Pages/Publishers';
 import Bucket from './Pages/Bucket';
 import Order from './Pages/Order';
 import SellerCabinet from './Pages/SellerCabinet';
+import ManagerCabinet from './Pages/ManagerCabinet';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,6 +28,7 @@ root.render(
     <Route path='/Reg' element={<Reg></Reg>}></Route>
     <Route path='/UserCabinet' element={<UserCabinet></UserCabinet>}></Route>
     <Route path='/SellerCabinet' element={<SellerCabinet/>} />
+    <Route path='/ManagerCabinet' element={<ManagerCabinet/>} />
     <Route path='/Publishers' element={<Publishers></Publishers>}></Route>
     <Route path='/Bucket' element={<Bucket></Bucket>}></Route>
     <Route path='*' element={<div>Страница не найдена!</div>}></Route>

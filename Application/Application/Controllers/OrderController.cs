@@ -75,17 +75,41 @@ namespace Application.Controllers
 
         [HttpPost]
         [Route("/SetStatusOrder")]
-        public IActionResult SetStatusOrder(int id, string status,[FromServices] ApplicationContext applicationContext)
+        public bool SetStatusOrder(int id, string status,[FromServices] ApplicationContext applicationContext)
         {
             var Order = applicationContext.Order.Where(x => x.Id == id).FirstOrDefault();
             if (Order != null)
             {
                 Order.Status = status;
                 applicationContext.Order.Update(Order);
-                applicationContext.SaveChanges();
-                return StatusCode(200);
+                if (status.ToLower() == "продано")
+                {
+                    var UserBookOrder = applicationContext.UserBookOrder.Where(x => x.OrderId == Order.Id).FirstOrDefault();
+                    if (UserBookOrder == null)
+                        return false;
+                        var Stock = applicationContext.Stock.Where(x => x.BookId == UserBookOrder.BookId).FirstOrDefault();
+                        if (Stock == null)
+                            return false;
+                            var User = applicationContext.Users.Where(x => x.Id == Order.UserId).FirstOrDefault();
+                            if (User == null)
+                                return false;
+                            var Sale = new Sale(User, Stock, UserBookOrder.Price * UserBookOrder.Count);
+                            applicationContext.Sale.Add(Sale);
+                            Stock.Count -= UserBookOrder.Count;
+                        var Book = applicationContext.Books.Where(x => x.Id == Stock.BookId).FirstOrDefault();
+                        if (Stock.Count <= 0 && Book != null)
+                            {
+                                    Book.IsStock = false;
+                                    applicationContext.Update(Book);
+                            }
+                            applicationContext.Order.Remove(Order);
+                            applicationContext.SaveChanges();
+                   
+                    
+                    return true;
+                }
             }
-            return StatusCode(400);
+            return false;
         }
 
         [HttpGet]

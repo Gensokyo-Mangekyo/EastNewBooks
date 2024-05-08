@@ -13,5 +13,22 @@ namespace Application.Entities
         public int UserId { get; set; }
         public Stock Stock { get; set; }
         public int StockId { get; set; }
+        public string Date { get; set; }
+
+        public Sale()
+        {
+
+        }
+
+        public Sale(User user,Stock stock, decimal price)
+        {
+            User = user;
+            UserId = user.Id;
+            Stock = stock;
+            StockId = stock.Id;
+            Price = price;
+            Date = DateTime.Now.ToString("d");
+        }
     }
+
 }

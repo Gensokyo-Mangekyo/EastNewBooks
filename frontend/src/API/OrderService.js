@@ -32,7 +32,8 @@ export default class OrderService  {
 
     static async SetStatusOrder(id,status) {
         try {
-          await axios.post(OrderService.host + "/SetStatusOrder?id=" + id + "&" + "status=" + status)
+            const response = await axios.post(OrderService.host + "/SetStatusOrder?id=" + id + "&" + "status=" + status)
+            return response.data
               } catch(e) {
                   console.log(e)
           }

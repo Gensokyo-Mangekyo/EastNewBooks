@@ -69,6 +69,15 @@ export default class GlobalService {
         }
       }
 
+      static IsNumberValue(e) {
+        if (e.target.value === "") {
+          return false;
+        }
+        if (!isNaN(e.target.value)) 
+          return true
+        else return false
+      }
+
       static getFormattedDate() {
         const currentDate = new Date();
         const day = currentDate.getDate();

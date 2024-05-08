@@ -79,6 +79,8 @@ export default function SellOrderContainer(props) {
                 StatusArray[x.id] !== undefined ?
               <InputValue maxLength={30} defaultValue={StatusArray[x.id]} onBlur={ async (e)=> {
                 if (e.target.value !== "") {
+                    const IsRemoved = await OrderService.SetStatusOrder(x.id,e.target.value)
+                    if (!IsRemoved) 
                     SetStatusArray(prevState => {
                         const updatedStatusArray = prevState.map((value,index) => {
                             if (index === x.id) {
@@ -88,7 +90,7 @@ export default function SellOrderContainer(props) {
                         });
                         return updatedStatusArray;
                     });
-                    await OrderService.SetStatusOrder(x.id,e.target.value)
+                    else props.RemoveOrder(x.id)
                 } else e.target.value = StatusArray[x.id]
               }} /> : ""
               }
