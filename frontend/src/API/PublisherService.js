@@ -12,4 +12,12 @@ export default class PublisherService {
                 console.log(e)
         }
     }
+
+    static async UpdatePublishers(PublishersArrayJson) {
+        try {
+            await axios.post(PublisherService.host + "/UpdatePublishers",PublishersArrayJson)
+            } catch(e) {
+                console.log(e)
+        }
+    }
 }
