@@ -27,5 +27,24 @@ namespace Application.Controllers
             applicationContext.SaveChanges();
             return StatusCode(200);
         }
+
+        [HttpPost]
+        [Route("/RemovePublisher")]
+        public IActionResult RemovePublisher(int id, [FromServices] ApplicationContext applicationContext)
+        {
+            var Publisher = applicationContext.Publishers.Where(x => x.Id == id).FirstOrDefault();
+            if (Publisher != null)
+            { 
+                Array.ForEach(applicationContext.Books.Where(x => x.PublisherId == id).ToArray(), (value) => { //(Cascade Delete On) -  Remove Publisher from Books else they will delete.
+                    value.Publisher = null;
+                    value.PublisherId = null;
+                    applicationContext.Books.Update(value);
+                });
+                applicationContext.Remove(Publisher);
+                applicationContext.SaveChanges();
+                return StatusCode(200);
+            }
+            return StatusCode(404);
+        }
     }
 }

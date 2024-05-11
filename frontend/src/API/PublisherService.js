@@ -20,4 +20,12 @@ export default class PublisherService {
                 console.log(e)
         }
     }
+
+    static async RemovePublisherById(id) {
+        try {
+            await axios.post(PublisherService.host + "/RemovePublisher?id=" + id)
+            } catch(e) {
+                console.log(e)
+        }
+    }
 }

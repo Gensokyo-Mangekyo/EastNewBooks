@@ -16,24 +16,47 @@
     max-width: 95%;
     padding-top: 15px;
     padding-left: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
   }
 
 .Header {
     font-size: 35px;
     font-weight: bold;
     margin: auto;
-    cursor: pointer;
 }
 
 .Description {
     font-size: 25px;
-    padding-bottom: 20px;
-    cursor: pointer;
+    margin-bottom: 20px;
+ 
 }
 
 .HeaderBlock {
     max-width: 250px;
     margin-bottom: 10px;
 }
+
+.DeletePublisher {
+    height: 25px;
+    background-color: #ff0052;
+    width: 100px;
+    text-align: center;
+    padding: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.DeletePublisher:hover {
+    color: black;
+}
+
+.DeletePublisher:after {
+    color: #fff;
+}
+
 
 
