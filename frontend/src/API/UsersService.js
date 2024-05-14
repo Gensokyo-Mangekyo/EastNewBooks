@@ -52,7 +52,15 @@ export default class UsersService {
         try {
             const response = await axios.get(UsersService.host + "/GetUser?login="+login + "&password="+password)
             return response.data["role"]
+           } catch(e) {
+              return ""
+           }
+    }
 
+    static async RemoveUser(id) {
+        try {
+            const response = await axios.post(UsersService.host + "/RemoveUser?id="+id)
+            return response.data
            } catch(e) {
               return ""
            }

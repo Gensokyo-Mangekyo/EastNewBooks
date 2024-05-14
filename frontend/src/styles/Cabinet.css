@@ -6,7 +6,7 @@
 	width: 100%; 
 	margin-bottom: 24px;
     margin-top: 22px;
-    min-height: 720px;
+    min-height: 840px;
 }
 
 .Avatar {
@@ -271,4 +271,45 @@
     font-weight: bold;
     margin-top: 15px;
     margin-bottom: 10px;
+ }
+
+ .AdminContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+ }
+
+ .Item {
+    width: 400px; /* Ширина элементов */
+    height: 100px; /* Высота элементов */
+    margin: 0 auto;
+ }
+
+ .AddUserButton {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    width: 100px;
+    padding: 5px; 
+    height: 25px;
+    background-color: #ff0052;
+    color: white;
+    cursor: pointer;
+ }
+
+ .GridBottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+ }
+
+ .ErrorAdmin {
+    padding-top: 20px;
+    text-align: left;
+    font-size: 20px;
+    color: #ff0052;
+    font-weight: bold;
  }

@@ -15,6 +15,7 @@ export default function PublishersContainer(props) {
     async function DataPublishers() {
         const Data = await PublisherService.GetPublishers()
         const ArrayChanged =[]
+        if (Data) {
         if (Data.length > 0) {
         Data.map(x=> {
             ArrayChanged[x.id] = {
@@ -27,6 +28,7 @@ export default function PublishersContainer(props) {
         })
        props.SetChanged(ArrayChanged)
         SetPublishers(Data)
+    }
     }
     }
 

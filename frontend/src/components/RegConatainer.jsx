@@ -76,6 +76,17 @@ function RegisterValue(Key,Value) {
                    GlobalService.setCookie("UserLogin",RegValues["Login"],30)
                    GlobalService.setCookie("UserPassword",RegValues["Password"],30)
                   }
+
+                  if (RegValues["Login"].length < 6 ) {
+                    SetError("Логин меньше 5 символов!")
+                    return
+                  }
+
+                  if (RegValues["Password"].length < 6 ) {
+                    SetError("Пароль меньше 5 символов!")
+                    return
+                  }
+
                   let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                   if (!regex.test(RegValues["Email"])) {
                   SetError("Неверно введена почта!")

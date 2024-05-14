@@ -13,6 +13,7 @@ import Bucket from './Pages/Bucket';
 import Order from './Pages/Order';
 import SellerCabinet from './Pages/SellerCabinet';
 import ManagerCabinet from './Pages/ManagerCabinet';
+import AdminCabinet from './Pages/AdminCabinet';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,6 +30,7 @@ root.render(
     <Route path='/UserCabinet' element={<UserCabinet></UserCabinet>}></Route>
     <Route path='/SellerCabinet' element={<SellerCabinet/>} />
     <Route path='/ManagerCabinet' element={<ManagerCabinet/>} />
+    <Route path='/AdminCabinet' element={<AdminCabinet/>} />
     <Route path='/Publishers' element={<Publishers></Publishers>}></Route>
     <Route path='/Bucket' element={<Bucket></Bucket>}></Route>
     <Route path='*' element={<div>Страница не найдена!</div>}></Route>
