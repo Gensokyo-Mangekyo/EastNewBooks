@@ -18,6 +18,7 @@ export default function AdminContainer() {
         const NewUser = {...User}
         NewUser[key] = value
         SetUser(NewUser)
+        console.log(NewUser)
     }
 
   async function AddNewUser() {
@@ -33,7 +34,7 @@ export default function AdminContainer() {
             "Email",
             "Role"
         ]
-        
+        console.log(User)
         for (let i = 0; i < ArrayFileds.length; i++) {
             if (User[ArrayFileds[i]] === undefined)
             {
@@ -43,12 +44,12 @@ export default function AdminContainer() {
             }
         }
 
-        if (User["Login"].length < 6) {
+        if (User["Login"].length < 5) {
             SetError("Логин меньше 5 символов!")
             return
         }
 
-        if (User["Password"].length < 6) {
+        if (User["Password"].length < 5) {
             SetError("Пароль меньше 5 символов!")
             return
         }
@@ -87,31 +88,31 @@ export default function AdminContainer() {
     return (<div className="AdminContainer">
         <div className="Item">
                 <LabelText>Имя</LabelText>
-                <InputValue onBlur={(e)=> {
+                <InputValue onChange={(e)=> {
                     SetValueUser("Name",e.target.value)
                 }} />
                 <LabelText>Фамилия</LabelText>
-                <InputValue onBlur={(e)=> {
+                <InputValue onChange={(e)=> {
                     SetValueUser("Surname",e.target.value)
                 }}/>
                 <LabelText>Логин</LabelText>
-                <InputValue  onBlur={(e)=> {
+                <InputValue  onChange={(e)=> {
                     SetValueUser("Login",e.target.value)
                 }} />
                 <LabelText>Пароль</LabelText>
-                <InputValue onBlur={(e)=> {
+                <InputValue onChange={(e)=> {
                     SetValueUser("Password",e.target.value)
                 }}  />
                 <LabelText>Телефон</LabelText>
-                <InputValue onBlur={(e)=> {
+                <InputValue onChange={(e)=> {
                     SetValueUser("Phone",e.target.value)
                 }} />
                 <LabelText>Почта</LabelText>
-                <InputValue  onBlur={(e)=> {
+                <InputValue  onChange={(e)=> {
                     SetValueUser("Email",e.target.value)
                 }} />
                 <LabelText>Роль</LabelText>
-                <InputValue onBlur={(e)=> {
+                <InputValue onChange={(e)=> {
                     SetValueUser("Role",e.target.value)
                 }} />
                 <div className="GridBottom">
