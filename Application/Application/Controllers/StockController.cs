@@ -46,6 +46,22 @@ namespace Application.Controllers
             }
             return StatusCode(500);
         }
+        [HttpPost]
+        [Route("/ChangeStock")]
+        public bool ChangeStock(int id, int count, [FromServices] ApplicationContext applicationContext)
+        {
+            var Stock = applicationContext.Stock.Where(x => x.Id == id).FirstOrDefault();
+            if (Stock  != null)
+            {
+                if (count < 0)
+                    return false;
+
+                Stock.Count = count;
+                applicationContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
     }
 }

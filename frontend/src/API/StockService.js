@@ -20,4 +20,13 @@ export default class StockService {
                 console.log(e)
         }
     }
+
+    static async ChangeStock(id,count) {
+        try {
+            const response = await axios.post(StockService.host + "/ChangeStock?id=" + id + "&count="+count)
+            return response.data
+               } catch(e) {
+                   console.log(e)
+           }
+    }
 }

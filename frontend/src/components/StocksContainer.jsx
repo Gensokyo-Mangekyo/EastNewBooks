@@ -80,9 +80,11 @@ export default function StocksContainer(props) {
               <p className="StatusOrder" >Осталось</p>
               <div className="StatusText"> {
                 CountArray[x.id] !== undefined ?
-              <InputValue maxLength={30} defaultValue={CountArray[x.id]} onBlur={ async (e)=> {
+              <InputValue maxLength={6} defaultValue={CountArray[x.id]} onBlur={ async (e)=> {
                 if (GlobalService.IsNumberValue(e)) {
-                    console.log("Yes")
+                    const IsSuccess = await StockService.ChangeStock(x.id,e.target.value)
+                    if (!IsSuccess)
+                    return
                     SetCountArray(prevState => {
                         const updatedStatusArray = prevState.map((value,index) => {
                             if (index === x.id) {

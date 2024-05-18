@@ -28,7 +28,7 @@
     white-space: nowrap;
     overflow: hidden;
 	cursor: pointer;
-  text-wrap: wrap;
+  text-wrap: nowrap;
     text-overflow: ellipsis;
 	font-family: GTEestiPro, Arial, sans-serif;
   }
@@ -153,4 +153,10 @@ user-select: none;
 .description p {
  font-size: 25px;
  word-wrap: break-word;
+}
+
+@media (max-width: 200px) {
+  .сard {
+      font-size: clamp(10px, 1.5vw, 18px); /* Дополнительное уменьшение шрифта на меньших экранах */
+  }
 }

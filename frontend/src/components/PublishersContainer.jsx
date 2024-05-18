@@ -76,7 +76,7 @@ export default function PublishersContainer(props) {
     if (login && password)
        {
          const Role = await UsersService.GetRole(login,password)
-         if (Role === "Адмнистратор" || Role === "Менеджер")
+         if (Role === "Администратор" || Role === "Менеджер")
             SetIsRoot(true)
          return
        }
@@ -84,7 +84,7 @@ export default function PublishersContainer(props) {
     password = GlobalService.getCookie("UserPassword")
     if (login && password ) {
         const Role = await UsersService.GetRole(login,password)
-         if (Role === "Адмнистратор" || Role === "Менеджер")
+         if (Role === "Администратор" || Role === "Менеджер")
         SetIsRoot(true)
     }
     }

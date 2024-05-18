@@ -127,14 +127,16 @@ export default function Main() {
   }
     },[])
 
+    const handleRemoveClick = async (Id)=> {
+      BooksService.RemoveCategory(Id)
+      BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
+    }
+
     async function LADNO(login,password) {
       const Role = await UsersService.GetRole(login,password)
           if (Role === "Менеджер" || Role === "Администратор" )
           {
-            SetRemoveFuncCategory(async (Id)=> {
-              await BooksService.RemoveCategory(Id)
-              BooksService.GetCategories(SetCategories,navigate,SetCategoryFilter)
-            })
+            SetRemoveFuncCategory(handleRemoveClick)
           }
   }
 
@@ -207,7 +209,7 @@ export default function Main() {
           const searchUrl = `/SearchBooks/` + Query;
          navigate(searchUrl)
      }} />
-     <Category Remove={RemoveFuncCategory} List={Categories} />
+     <Category List={Categories} />
   {filter !== undefined ? <BooksContainer Default="Доступных книг в продаже нет!" Name ={"Категория: " + filter} Books = {Books} /> : 
   <BooksContainer Default="Доступных книг в продаже нет!" Name ="Главная" Books = {Books} /> }  
      <Pagination prev={ async (e)=>{ if (Page-1 === 0) 

@@ -40,8 +40,12 @@ namespace Application
             string URL = $"{NameFolder}/{ NameFile}.png";
             string path = $"wwwroot/{URL}";
 
-          if (!File.Exists(path))
+            if (File.Exists(path))
             {
+                NameFile = $"{Name}_{Guid.NewGuid()}";
+                URL = $"{NameFolder}/{ NameFile}.png";
+            }
+        
                 using (FileStream fileStream = new FileStream(path, FileMode.Create))
                 {
                     using (BinaryWriter writer = new BinaryWriter(fileStream))
@@ -53,9 +57,8 @@ namespace Application
                     }
                 }
                 return URL;
-            }
-          else
-            return URL;
+            
+     
         }
    }
 }

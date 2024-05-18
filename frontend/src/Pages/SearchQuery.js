@@ -46,8 +46,8 @@ export default function SearchQuery() {
         <div>
             <Header/>
         <Nav Navigate = {GlobalService.Navigation} />
-            <Category List={Categories} />
-            <Search Change = {(e)=> {
+
+        <Search Change = {(e)=> {
       SetQuery(e.target.value)
      }}  
      Click={async (e)=> {
@@ -62,7 +62,10 @@ export default function SearchQuery() {
           if(!CheckedSymbols || Query === "") return;
           SearchBooks(Query)
      }} />
-           <BooksContainer Default="По результат поиска ничего не было найдено!" Name ="Результат поиска" Books = {Books} />
+
+            <Category List={Categories} />
+           
+           <BooksContainer Default="По результат поиска ничего не было найдено!" Name = {"Результат поиска: " + search} Books = {Books} />
            <Pagination prev={ async (e)=>{ if (Page-1 === 0) 
      await SearchBooks(search,LastPage);
       else  await SearchBooks(search,Page-1);}} next={ async (e)=>{
