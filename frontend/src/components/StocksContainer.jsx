@@ -46,7 +46,7 @@ export default function StocksContainer(props) {
             props.Stocks.map(x=> (
           <div id={x.id} className="ItemSellOrder">
           <div className="LeftSellOrder" >
-          <div className="UserName"> {x.book.name}</div>
+          <div className="BookForSale"> {x.book.name}</div>
           <div className="Phone">Цена за шт</div>
           <div className="StadartText">{x.book.price}₽</div>
           <div onClick={()=>{ SetDetails({

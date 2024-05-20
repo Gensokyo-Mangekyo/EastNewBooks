@@ -8,6 +8,7 @@ import Category from "../components/UI/Category/Category";
 import BookInformation from "../components/Books/BookInfromation";
 import GlobalService from "../API/GlobalService";
 import Header from "../components/UI/Header/Header";
+import Search from "../components/UI/Search/Search";
 
 
 export default function ShowInfoBook() {
@@ -16,6 +17,7 @@ export default function ShowInfoBook() {
     const [Book,SetBook] = useState(null)
     const [Categories,SetCategories] = useState([])
     const [DataBook,SetDataBook] = useState(null)
+    const [Query,SetQuery] = useState("")
 
 
     async function GetBook() {
@@ -55,6 +57,7 @@ export default function ShowInfoBook() {
       return(
 
         <div>
+          <Header/>
              <Nav Navigate = {GlobalService.Navigation} />
 
            <AdminNav Navigate={[
@@ -81,6 +84,14 @@ export default function ShowInfoBook() {
               Name: "Узнать номер"
             },
            ]} />
+
+    <Search Change = {(e)=> {
+        SetQuery(e.target.value)
+       }} Click={(e)=> {
+        const searchUrl = `/SearchBooks/` + Query;
+        navigate(searchUrl)
+       }} />
+
             <Category List={Categories} />
         { Book ? <BookInformation SetNewDataBook = {DataBookCallback}  book= {Book} /> : <p>Загрузка...</p> }
         </div>

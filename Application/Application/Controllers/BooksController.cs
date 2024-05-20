@@ -89,7 +89,7 @@ namespace Application.Controllers
         [Route("/GetBooks")]
         public IActionResult GetBooks(int page, [FromServices] ApplicationContext applicationContext)
         {
-            return new JsonResult(applicationContext.Books.Where(x => x.IsStock == true).OrderBy(item => item.Id).AsEnumerable().Take(page * Limit).TakeLast(Limit).ToList());
+            return new JsonResult(applicationContext.Books.Where(x => x.IsStock == true).OrderBy(item => item.Id).AsEnumerable().Skip((page-1) * Limit).Take(Limit).ToList());
         }
 
         [HttpGet]
