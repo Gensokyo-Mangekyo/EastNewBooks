@@ -84,30 +84,32 @@ namespace Application.Controllers
                 applicationContext.Order.Update(Order);
                 if (status.ToLower() == "продано")
                 {
-                    var UserBookOrder = applicationContext.UserBookOrder.Where(x => x.OrderId == Order.Id).FirstOrDefault();
-                    if (UserBookOrder == null)
+                    var UserBookOrders = applicationContext.UserBookOrder.Where(x => x.OrderId == Order.Id).ToArray();
+                    if (UserBookOrders.Length == 0)
                         return false;
+                    foreach (var UserBookOrder in UserBookOrders)
+                    {
                         var Stock = applicationContext.Stock.Where(x => x.BookId == UserBookOrder.BookId).FirstOrDefault();
                         if (Stock == null)
                             return false;
-                            var User = applicationContext.Users.Where(x => x.Id == Order.UserId).FirstOrDefault();
-                            if (User == null)
-                                return false;
-                            var Sale = new Sale(User, Stock, UserBookOrder.Price * UserBookOrder.Count);
-                            applicationContext.Sale.Add(Sale);
-                            Stock.Count -= UserBookOrder.Count;
+                        var User = applicationContext.Users.Where(x => x.Id == Order.UserId).FirstOrDefault();
+                        if (User == null)
+                            return false;
+                        var Sale = new Sale(User, Stock, UserBookOrder.Price * UserBookOrder.Count);
+                        applicationContext.Sale.Add(Sale);
+                        Stock.Count -= UserBookOrder.Count;
                         var Book = applicationContext.Books.Where(x => x.Id == Stock.BookId).FirstOrDefault();
                         if (Stock.Count <= 0 && Book != null)
-                            {
-                                    Book.IsStock = false;
-                                    applicationContext.Update(Book);
-                            }
-                            applicationContext.Order.Remove(Order);
-                            applicationContext.SaveChanges();
-                   
-                    
+                        {
+                            Book.IsStock = false;
+                            applicationContext.Update(Book);
+                        }
+                        applicationContext.Order.Remove(Order);
+                    }
+                    applicationContext.SaveChanges();
                     return true;
                 }
+                applicationContext.SaveChanges();
             }
             return false;
         }

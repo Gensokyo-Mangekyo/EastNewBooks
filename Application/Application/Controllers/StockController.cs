@@ -57,6 +57,12 @@ namespace Application.Controllers
                     return false;
 
                 Stock.Count = count;
+                Book book = applicationContext.Books.Where(x => x.Id == Stock.BookId).FirstOrDefault();
+                if (book != null)
+                {
+                    book.IsStock = true;
+                    applicationContext.Update(book);
+                }
                 applicationContext.SaveChanges();
                 return true;
             }

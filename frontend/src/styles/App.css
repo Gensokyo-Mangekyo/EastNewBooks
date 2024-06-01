@@ -123,5 +123,21 @@ body {
     
   }
 
+  .InfoMain {
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 15px 24px;
+    margin: 0 auto;
+    margin-left: 30%;
+     margin-right: 30%;
+    max-width: 60%; 
+    margin-bottom: 24px;
+    margin-top: 22px;
+  }
+
+  .InfoMain img {
+    text-align: center;
+    max-width: 100%;
+  }
 
 

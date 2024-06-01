@@ -57,6 +57,7 @@ export default function Main() {
     SetAdminPanel(null)
     if (filter)
     navigate("/")
+    else await SetNewPage(LastPage);
    }
   }
   const DeleteBook = async(value) => {

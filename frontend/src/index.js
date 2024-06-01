@@ -14,6 +14,7 @@ import Order from './Pages/Order';
 import SellerCabinet from './Pages/SellerCabinet';
 import ManagerCabinet from './Pages/ManagerCabinet';
 import AdminCabinet from './Pages/AdminCabinet';
+import Info from './Pages/Info';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,6 +36,7 @@ root.render(
     <Route path='/Bucket' element={<Bucket></Bucket>}></Route>
     <Route path='*' element={<div>Страница не найдена!</div>}></Route>
     <Route path='/Order' element={<Order/>} ></Route>
+    <Route path='/Info' element={<Info/>} ></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

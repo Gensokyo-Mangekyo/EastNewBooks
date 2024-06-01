@@ -118,10 +118,6 @@ export default function PublishersContainer(props) {
               
                { props.Changed[x.id].Edit === false ? <p style={Cursor} className="Description">{props.Changed[x.id].Description === null || props.Changed[x.id].Description === "" ? "Описание отсутсвует" : props.Changed[x.id].Description } </p> : <InputValue onFocus={(e)=> {onFocusInit(e,props.Changed[x.id].Description)}} onKeyDown={(e)=> {ConfirmInput(e,x.id,"Description")}} maxLength={500} /> }     
                 </div>
-               {IsRoot === true ? <div onClick={async ()=> await RemovePublisherById(x.id)} className="DeletePublisher" >
-                    Удалить
-                </div> : ""
-                }
                 </div>
                 )
                 : <div className="PublisherItem" ><p className="Header" >Издатели отсуствуют</p>   <p className="Description">Наверное их ещё не добавили</p>       </div> }            

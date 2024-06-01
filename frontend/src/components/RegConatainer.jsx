@@ -77,12 +77,12 @@ function RegisterValue(Key,Value) {
                    GlobalService.setCookie("UserPassword",RegValues["Password"],30)
                   }
 
-                  if (RegValues["Login"].length < 6 ) {
+                  if (RegValues["Login"].length < 5 ) {
                     SetError("Логин меньше 5 символов!")
                     return
                   }
 
-                  if (RegValues["Password"].length < 6 ) {
+                  if (RegValues["Password"].length < 5 ) {
                     SetError("Пароль меньше 5 символов!")
                     return
                   }

@@ -28,6 +28,7 @@
     font-size: 20px;
     margin-left: 35px;
     width: 100%;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1350px) {
